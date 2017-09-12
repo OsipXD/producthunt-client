@@ -1,2 +1,2 @@
 # producthunt-client
-Simple client of ProductHunt for Junito
+Simple ProductHunt client for Junito
