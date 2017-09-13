@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'idea'
 
 android {
     compileSdkVersion 26
@@ -14,29 +17,54 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-        test.java.srcDirs += 'src/test/kotlin'
-        androidTest.java.srcDirs += 'src/androidTest/kotlin'
-    }
-
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    // Add Kotlin to Java's source dirs
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
+// Download sources
+idea.module {
+    downloadSources = true
+}
+
+// Libs versions
+ext.moxyVersion = '1.5.3'
+ext.fuelVersion = '1.10.0'
+
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    // Required
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
+    compile "com.android.support:appcompat-v7:26.0.+"
+    compile "com.android.support.constraint:constraint-layout:1.0.+"
+
+    // Libs
+    compile "com.github.kittinunf.fuel:fuel:$fuelVersion"
+    compile "com.github.kittinunf.fuel:fuel-android:$fuelVersion"
+    compile "com.arello-mobile:moxy:$moxyVersion"
+    compile "com.arello-mobile:moxy-app-compat:$moxyVersion"
+    compile "com.google.code.gson:gson:2.8.1"
+    kapt "com.arello-mobile:moxy-compiler:$moxyVersion"
+
+    // For tests
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
+    testCompile "com.nhaarman:mockito-kotlin:1.5.0"
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2') {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
-    compile "com.android.support:appcompat-v7:26.+"
-    compile "com.android.support.constraint:constraint-layout:+"
-    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
 }
 
 repositories {

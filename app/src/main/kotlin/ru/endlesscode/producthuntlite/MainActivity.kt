@@ -1,9 +1,9 @@
 package ru.endlesscode.producthuntlite
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import com.arellomobile.mvp.MvpAppCompatActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : MvpAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
