@@ -32,36 +32,9 @@ import kotlin.test.assertTrue
 
 class JsonKtTest {
     companion object {
-        private val jsonArrayString = """{
-  "categories" : [
-    {
-      "id" : 1,
-      "slug" : "tech",
-      "name" : "Tech",
-      "color" : "#da552f",
-      "item_name" : "product"
-    },
-    {
-      "id" : 2,
-      "slug" : "category-2",
-      "name" : "Category 2",
-      "color" : "#da552f",
-      "item_name" : "product"
-    }
-  ]
-}"""
-
-        private val jsonWrongArrayString = """{
-  "categories" : "It isn't array"
-}"""
-
-        private val jsonObjectString = """{
-  "id" : 1,
-  "slug" : "tech",
-  "name" : "Tech",
-  "color" : "#da552f",
-  "item_name" : "product"
-}"""
+        private val jsonArrayString = FileHelper.readJson("Categories")
+        private val jsonWrongArrayString = FileHelper.readJson("WrongCategories")
+        private val jsonObjectString = FileHelper.readJson("Category")
     }
 
     @Test

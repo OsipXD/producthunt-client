@@ -23,24 +23,13 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.model
+package ru.endlesscode.producthuntlite
 
-import org.junit.Test
-import kotlin.test.assertTrue
+object FileHelper {
+    fun readJson(name: String) = this.readText("json/$name.json")
 
-class ProductHuntApiTest {
-
-    @Test
-    fun getCategories_mustReturnCategories() {
-        val categories = ProductHuntApi.getCategories()
-
-        assertTrue(categories.isNotEmpty())
-    }
-
-    @Test
-    fun getFeed_mustReturnPosts() {
-        val posts = ProductHuntApi.getCategoryFeed("tech")
-
-        assertTrue(posts.isNotEmpty())
+    private fun readText(path: String): String {
+        val classLoader = javaClass.classLoader
+        return classLoader.getResource(path).readText()
     }
 }

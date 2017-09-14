@@ -31,8 +31,8 @@ android {
         androidTest.java.srcDirs += 'src/androidTest/kotlin'
     }
 
-    testOptions {
-        unitTests.returnDefaultValues = true
+    testOptions.unitTests {
+        returnDefaultValues = true
     }
 }
 
@@ -61,6 +61,7 @@ dependencies {
 
     // For tests
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
+    testCompile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
     testCompile "com.nhaarman:mockito-kotlin:1.5.0"
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2') {
         exclude group: 'com.android.support', module: 'support-annotations'

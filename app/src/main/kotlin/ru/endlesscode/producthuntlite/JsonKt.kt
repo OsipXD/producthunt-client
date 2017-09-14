@@ -30,10 +30,7 @@ package ru.endlesscode.producthuntlite
 import com.google.gson.*
 import kotlin.reflect.KClass
 
-private val jsonParser = JsonParser()
-private val gson = Gson()
-
-fun String.asJsonObject(): JsonObject = jsonParser.parse(this).asJsonObject
+fun String.asJsonObject(): JsonObject = JsonParser().parse(this).asJsonObject
 
 fun <T : Any> JsonObject.getAsList(memberName: String, classOfT: KClass<T>): List<T> {
     if (!this.has(memberName)) {
@@ -50,4 +47,4 @@ fun <T : Any> JsonObject.getAsList(memberName: String, classOfT: KClass<T>): Lis
     return result
 }
 
-fun <T : Any> JsonElement.toObject(classOfT: KClass<T>): T = gson.fromJson(this, classOfT.java)
+fun <T : Any> JsonElement.toObject(classOfT: KClass<T>): T = Gson().fromJson(this, classOfT.java)

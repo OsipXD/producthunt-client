@@ -43,16 +43,20 @@ object ProductHuntApi {
         val (_, _, result) = route("/categories").responseString()
         val (data, _) = result
 
-        val categories = mutableListOf<CategoryData>()
-        if (data != null) {
-            categories.addAll(data.asJsonObject().getAsList("categories", CategoryData::class))
-        }
-
-        return categories
+        return data?.asJsonObject()?.getAsList("categories", CategoryData::class) ?: emptyList()
     }
 
-    private fun route(value: String): Request {
-        return value.httpGet().header(
+    fun getCategoryFeed(category: String, daysAgo: Int = 0): List<PostData> {
+        val validDaysAgo = daysAgo.coerceAtLeast(0)
+        val (_, _, result) = route("/categories/$category/posts",
+                "days_ago" to validDaysAgo).responseString()
+        val (data, _) = result
+
+        return data?.asJsonObject()?.getAsList("posts", PostData::class) ?: emptyList()
+    }
+
+    private fun route(value: String, vararg parameters: Pair<String, Any>): Request {
+        return value.httpGet(listOf(*parameters)).header(
                 "Accept" to "application/json",
                 "Content-Type" to "application/json",
                 "Authorization" to "Bearer $ACCESS_TOKEN",

@@ -25,22 +25,9 @@
 
 package ru.endlesscode.producthuntlite.model
 
-import org.junit.Test
-import kotlin.test.assertTrue
+import com.google.gson.annotations.SerializedName
 
-class ProductHuntApiTest {
-
-    @Test
-    fun getCategories_mustReturnCategories() {
-        val categories = ProductHuntApi.getCategories()
-
-        assertTrue(categories.isNotEmpty())
-    }
-
-    @Test
-    fun getFeed_mustReturnPosts() {
-        val posts = ProductHuntApi.getCategoryFeed("tech")
-
-        assertTrue(posts.isNotEmpty())
-    }
-}
+data class ScreenshotUrl(
+        @SerializedName("300px") val px300: String,
+        @SerializedName("850px") val px850: String
+)
