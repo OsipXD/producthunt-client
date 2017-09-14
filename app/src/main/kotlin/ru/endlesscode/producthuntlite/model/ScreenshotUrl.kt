@@ -26,8 +26,9 @@
 package ru.endlesscode.producthuntlite.model
 
 import com.google.gson.annotations.SerializedName
+import java.net.URL
 
 data class ScreenshotUrl(
-        @SerializedName("300px") val px300: String,
-        @SerializedName("850px") val px850: String
+        @SerializedName("300px") val px300: URL,
+        @SerializedName("850px") val px850: URL
 )

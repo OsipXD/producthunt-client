@@ -32,6 +32,7 @@ import org.junit.runners.Parameterized
 import ru.endlesscode.producthuntlite.FileHelper
 import ru.endlesscode.producthuntlite.asJsonObject
 import ru.endlesscode.producthuntlite.toObject
+import java.net.URL
 import kotlin.test.assertEquals
 
 @RunWith(Parameterized::class)
@@ -46,13 +47,13 @@ class JsonDeserializationTest(private val jsonName: String, private val expected
                     id = 1,
                     name = "Awesome Idea #17",
                     day = "2017-07-13",
-                    thumbnail = ThumbnailData(1, "https://ph-files.imgix.net/81511bc5-e803-4220-bd93-c88dbdcabd50?auto=format&fit=crop&h=570&w=430"),
+                    thumbnail = ThumbnailData(1, URL("https://ph-files.imgix.net/81511bc5-e803-4220-bd93-c88dbdcabd50?auto=format&fit=crop&h=570&w=430")),
                     desc = "Great new search engine",
                     categoryId = 2,
                     votesCount = 0,
                     screenshotUrl = ScreenshotUrl(
-                            px300 = "http://placehold.it/850x850.png",
-                            px850 = "http://placehold.it/850x850.png"
+                            px300 = URL("http://placehold.it/850x850.png"),
+                            px850 = URL("http://placehold.it/850x850.png")
                     )
             )
 

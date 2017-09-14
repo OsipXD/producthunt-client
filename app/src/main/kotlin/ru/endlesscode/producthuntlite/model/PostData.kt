@@ -26,6 +26,7 @@
 package ru.endlesscode.producthuntlite.model
 
 import com.google.gson.annotations.SerializedName
+import java.net.URL
 
 data class PostData(
         val id: Int,
@@ -36,5 +37,8 @@ data class PostData(
         @SerializedName("tagline") val desc: String,
         @SerializedName("category_id") val categoryId: Int,
         @SerializedName("votes_count") val votesCount: Int
-)
+) {
+    val thumbnailUrl: URL
+        get() = thumbnail.imageUrl
+}
 

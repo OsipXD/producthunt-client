@@ -25,6 +25,7 @@
 
 package ru.endlesscode.producthuntlite.model
 
+import org.junit.Ignore
 import org.junit.Test
 import kotlin.test.assertTrue
 
@@ -37,9 +38,11 @@ class ProductHuntApiTest {
         assertTrue(categories.isNotEmpty())
     }
 
+    @Ignore
     @Test
     fun getFeed_mustReturnPosts() {
-        val posts = ProductHuntApi.getCategoryFeed("tech")
+        val posts = mutableListOf<PostData>()
+        ProductHuntApi.getCategoryFeed(posts, "tech")
 
         assertTrue(posts.isNotEmpty())
     }

@@ -25,32 +25,40 @@
 
 package ru.endlesscode.producthuntlite
 
-import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
-import com.arellomobile.mvp.MvpAppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import ru.endlesscode.producthuntlite.model.PostData
-import ru.endlesscode.producthuntlite.model.ProductHuntApi
 
-class MainActivity : MvpAppCompatActivity() {
-    private lateinit var mProductsView: RecyclerView
-    private lateinit var mLayoutManager: LinearLayoutManager
-    private lateinit var mAdapter: PostsViewAdapter
+class PostsViewAdapter(private val mDataset: List<PostData>) : RecyclerView.Adapter<PostsViewAdapter.ViewHolder>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.setProduct(mDataset[position])
+    }
 
-        mProductsView = productsView
-        productsView.setHasFixedSize(true)
-        mLayoutManager = LinearLayoutManager(this)
-        mProductsView.layoutManager = mLayoutManager
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view: CardView = LayoutInflater.from(parent.context)
+                .inflate(R.layout.post_card, parent, false) as CardView
+        return ViewHolder(view)
+    }
 
-        // specify an adapter (see also next example)
-        val data = mutableListOf<PostData>()
-        ProductHuntApi.getCategoryFeed(data, "tech")
-        mAdapter = PostsViewAdapter(data)
-        mProductsView.adapter = mAdapter
+    override fun getItemCount(): Int {
+        return mDataset.size
+    }
+
+    class ViewHolder(postCard: CardView) : RecyclerView.ViewHolder(postCard) {
+        private var title: TextView = postCard.findViewById(R.id.postTitle)
+        private var desc: TextView = postCard.findViewById(R.id.postDesc)
+        private var votes: TextView = postCard.findViewById(R.id.postVotes)
+        private var thumbnail: ImageView = postCard.findViewById(R.id.postTitle)
+
+        fun setProduct(post: PostData) {
+            title.text = post.name
+            desc.text = post.desc
+            votes.text = post.votesCount.toString()
+        }
     }
 }

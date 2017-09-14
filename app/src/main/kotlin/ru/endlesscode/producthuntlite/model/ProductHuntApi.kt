@@ -25,6 +25,7 @@
 
 package ru.endlesscode.producthuntlite.model
 
+import android.util.Log
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.httpGet
@@ -46,13 +47,14 @@ object ProductHuntApi {
         return data?.asJsonObject()?.getAsList("categories", CategoryData::class) ?: emptyList()
     }
 
-    fun getCategoryFeed(category: String, daysAgo: Int = 0): List<PostData> {
+    fun getCategoryFeed(list: MutableList<PostData>, category: String, daysAgo: Int = 0) {
         val validDaysAgo = daysAgo.coerceAtLeast(0)
-        val (_, _, result) = route("/categories/$category/posts",
-                "days_ago" to validDaysAgo).responseString()
-        val (data, _) = result
-
-        return data?.asJsonObject()?.getAsList("posts", PostData::class) ?: emptyList()
+        route("/categories/$category/posts", "days_ago" to validDaysAgo).responseString { request, response, result ->
+            Log.d("Rest", "$request\n$response\n$result")
+            val (data, _) = result
+            
+            list.addAll(data?.asJsonObject()?.getAsList("posts", PostData::class) ?: emptyList())
+        }
     }
 
     private fun route(value: String, vararg parameters: Pair<String, Any>): Request {

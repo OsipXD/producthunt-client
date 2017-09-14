@@ -26,8 +26,9 @@
 package ru.endlesscode.producthuntlite.model
 
 import com.google.gson.annotations.SerializedName
+import java.net.URL
 
 data class ThumbnailData(
         val id: Int,
-        @SerializedName("image_url") val imageUrl: String
+        @SerializedName("image_url") val imageUrl: URL
 )
