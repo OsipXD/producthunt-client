@@ -28,11 +28,12 @@ package ru.endlesscode.producthuntlite.api
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ProductHuntApi {
 
-    @GET("topics?search[trending]=true")
-    fun getTopics(): Call<TopicsResponse>
+    @GET("topics")
+    fun getTopics(@Query("older") older: Int? = null, @Query("per_page") perPage: Int = 10): Call<TopicsResponse>
 
     @GET("categories/{topic}/posts")
     fun getTopicFeed(@Path("topic") topic: String): Call<PostsResponse>

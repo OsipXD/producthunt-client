@@ -23,5 +23,22 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.presenter
+package ru.endlesscode.producthuntlite.ui.common
 
+import android.support.v7.widget.RecyclerView
+import android.view.ViewGroup
+
+interface ViewTypeDelegateAdapter<T> {
+
+    abstract class Unit : ViewTypeDelegateAdapter<Unit> {
+        final override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {}
+    }
+
+    fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder
+
+    @Suppress("UNCHECKED_CAST")
+    fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
+        holder as ViewTypeHolder<T>
+        holder.bind(item as T)
+    }
+}

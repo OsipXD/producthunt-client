@@ -40,6 +40,8 @@ import ru.endlesscode.producthuntlite.inflate
 import ru.endlesscode.producthuntlite.ui.adapter.TopicsAdapter
 
 class TopicsFragment : Fragment() {
+
+
     private val topicList by lazy {
         topic_list.setHasFixedSize(true)
 

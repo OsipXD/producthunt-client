@@ -23,22 +23,20 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.common
+package ru.endlesscode.producthuntlite.ui.common
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import ru.endlesscode.producthuntlite.inflate
 
-interface ViewTypeDelegateAdapter<T> {
+abstract class ViewTypeHolder<in T>(parent: ViewGroup, layoutId: Int) : RecyclerView.ViewHolder(
+        parent.inflate(layoutId)) {
 
-    abstract class Unit : ViewTypeDelegateAdapter<Unit> {
-        final override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {}
+    open class Unit(parent: ViewGroup, layoutId: Int) : ViewTypeHolder<Unit>(parent, layoutId) {
+        final override fun bind(data: Unit) {
+            throw RuntimeException("Binding not allowed!")
+        }
     }
 
-    fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder
-
-    @Suppress("UNCHECKED_CAST")
-    fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
-        holder as ViewTypeHolder<T>
-        holder.bind(item as T)
-    }
+    abstract fun bind(data: T)
 }

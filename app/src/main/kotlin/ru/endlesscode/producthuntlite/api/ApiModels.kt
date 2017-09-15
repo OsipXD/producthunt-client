@@ -26,8 +26,8 @@
 package ru.endlesscode.producthuntlite.api
 
 import com.google.gson.annotations.SerializedName
-import ru.endlesscode.producthuntlite.common.AdapterConstants
-import ru.endlesscode.producthuntlite.common.ViewType
+import ru.endlesscode.producthuntlite.ui.common.AdapterConstants
+import ru.endlesscode.producthuntlite.ui.common.ViewType
 
 class TopicsResponse(val topics: List<TopicData>)
 

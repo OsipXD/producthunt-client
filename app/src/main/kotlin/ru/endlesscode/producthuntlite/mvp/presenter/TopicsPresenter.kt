@@ -23,8 +23,5 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.common
+package ru.endlesscode.producthuntlite.mvp.presenter
 
-interface ViewType {
-    val viewType: Int
-}

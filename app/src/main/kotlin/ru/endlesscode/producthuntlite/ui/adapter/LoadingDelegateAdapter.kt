@@ -28,8 +28,8 @@ package ru.endlesscode.producthuntlite.ui.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import ru.endlesscode.producthuntlite.R
-import ru.endlesscode.producthuntlite.common.ViewTypeDelegateAdapter
-import ru.endlesscode.producthuntlite.common.ViewTypeHolder
+import ru.endlesscode.producthuntlite.ui.common.ViewTypeDelegateAdapter
+import ru.endlesscode.producthuntlite.ui.common.ViewTypeHolder
 
 class LoadingDelegateAdapter : ViewTypeDelegateAdapter.Unit() {
 

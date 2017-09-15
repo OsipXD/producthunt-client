@@ -30,9 +30,9 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.topic_item.view.*
 import ru.endlesscode.producthuntlite.R
 import ru.endlesscode.producthuntlite.api.TopicData
-import ru.endlesscode.producthuntlite.common.ViewTypeDelegateAdapter
-import ru.endlesscode.producthuntlite.common.ViewTypeHolder
 import ru.endlesscode.producthuntlite.load
+import ru.endlesscode.producthuntlite.ui.common.ViewTypeDelegateAdapter
+import ru.endlesscode.producthuntlite.ui.common.ViewTypeHolder
 
 class TopicDelegateAdapter : ViewTypeDelegateAdapter<TopicData> {
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder = TopicViewHolder(parent)

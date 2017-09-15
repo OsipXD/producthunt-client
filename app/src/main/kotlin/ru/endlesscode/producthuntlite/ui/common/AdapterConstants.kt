@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.common
+package ru.endlesscode.producthuntlite.ui.common
 
 object AdapterConstants {
     val LOADING = 0

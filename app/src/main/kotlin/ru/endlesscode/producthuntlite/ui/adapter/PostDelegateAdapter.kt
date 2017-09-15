@@ -32,9 +32,9 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.post_item.view.*
 import ru.endlesscode.producthuntlite.R
 import ru.endlesscode.producthuntlite.api.PostData
-import ru.endlesscode.producthuntlite.common.ViewTypeDelegateAdapter
-import ru.endlesscode.producthuntlite.common.ViewTypeHolder
 import ru.endlesscode.producthuntlite.load
+import ru.endlesscode.producthuntlite.ui.common.ViewTypeDelegateAdapter
+import ru.endlesscode.producthuntlite.ui.common.ViewTypeHolder
 
 class PostDelegateAdapter : ViewTypeDelegateAdapter<PostData> {
 
