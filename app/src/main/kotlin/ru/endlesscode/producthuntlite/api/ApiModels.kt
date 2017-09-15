@@ -33,7 +33,9 @@ class TopicsResponse(val topics: List<TopicData>)
 data class TopicData(
         val id: Int,
         val slug: String,
-        val name: String
+        val name: String,
+        val description: String,
+        val image: String?
 )
 
 class PostsResponse(val posts: List<PostData>)
