@@ -4,11 +4,10 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="ru.endlesscode.producthuntlite.MainActivity">
+        tools:context="ru.endlesscode.producthuntlite.ui.activity.MainActivity">
 
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/topics_view"
-            android:scrollbars="vertical"
+    <FrameLayout
+            android:id="@+id/activity_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 </LinearLayout>

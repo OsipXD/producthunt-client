@@ -23,19 +23,21 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.model.adapter
+package ru.endlesscode.producthuntlite.ui.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.topic_layout.view.*
+import kotlinx.android.synthetic.main.topic_item.view.*
 import ru.endlesscode.producthuntlite.R
 import ru.endlesscode.producthuntlite.api.TopicData
+import ru.endlesscode.producthuntlite.common.ViewTypeDelegateAdapter
+import ru.endlesscode.producthuntlite.common.ViewTypeHolder
 import ru.endlesscode.producthuntlite.load
 
 class TopicDelegateAdapter : ViewTypeDelegateAdapter<TopicData> {
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder = TopicViewHolder(parent)
 
-    inner class TopicViewHolder(parent: ViewGroup) : ViewTypeHolder<TopicData>(parent, R.layout.topic_layout) {
+    inner class TopicViewHolder(parent: ViewGroup) : ViewTypeHolder<TopicData>(parent, R.layout.topic_item) {
         private val name = itemView.topic_name
         private val desc = itemView.topic_desc
         private val icon = itemView.topic_icon

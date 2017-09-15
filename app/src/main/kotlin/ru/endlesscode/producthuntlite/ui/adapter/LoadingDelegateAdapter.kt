@@ -23,10 +23,17 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.model.adapter
+package ru.endlesscode.producthuntlite.ui.adapter
 
-object AdapterConstants {
-    val LOADING = 0
-    val TOPICS = 1
-    val POSTS = 2
+import android.support.v7.widget.RecyclerView
+import android.view.ViewGroup
+import ru.endlesscode.producthuntlite.R
+import ru.endlesscode.producthuntlite.common.ViewTypeDelegateAdapter
+import ru.endlesscode.producthuntlite.common.ViewTypeHolder
+
+class LoadingDelegateAdapter : ViewTypeDelegateAdapter.Unit() {
+
+    override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder = LoadingViewHolder(parent)
+
+    class LoadingViewHolder(parent: ViewGroup) : ViewTypeHolder.Unit(parent, R.layout.loading)
 }
