@@ -51,6 +51,10 @@ android {
     }
 }
 
+kotlin {
+    experimental.coroutines = 'enable'
+}
+
 // Download sources
 idea.module {
     downloadSources = true
@@ -62,6 +66,7 @@ ext {
     moxyVersion = '1.5.+'
     retrofitVersion = '2.3.+'
     gsonVersion = '2.8.+'
+    coroutinesVersion = '0.18'
 }
 
 dependencies {
@@ -71,13 +76,20 @@ dependencies {
     compile "com.android.support:cardview-v7:$androidVersion"
     compile "com.android.support:recyclerview-v7:$androidVersion"
 
-    // Libs
+    // Http libs
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     compile "com.squareup.okhttp3:logging-interceptor:3.9.0"
+    compile "com.google.code.gson:gson:$gsonVersion"
+
+    // Coroutines support
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    compile "ru.gildor.coroutines:kotlin-coroutines-retrofit:0.7.1"
+
+    // MVP framework
     compile "com.arello-mobile:moxy:$moxyVersion"
     compile "com.arello-mobile:moxy-app-compat:$moxyVersion"
-    compile "com.google.code.gson:gson:$gsonVersion"
     kapt "com.arello-mobile:moxy-compiler:$moxyVersion"
 
     // For tests

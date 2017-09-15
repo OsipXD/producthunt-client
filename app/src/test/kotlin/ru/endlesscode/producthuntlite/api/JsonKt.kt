@@ -27,24 +27,12 @@
 
 package ru.endlesscode.producthuntlite.api
 
-import com.google.gson.*
+import com.google.gson.Gson
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import kotlin.reflect.KClass
 
 fun String.asJsonObject(): JsonObject = JsonParser().parse(this).asJsonObject
-
-fun <T : Any> JsonObject.getAsList(memberName: String, classOfT: KClass<T>): List<T> {
-    if (!this.has(memberName)) {
-        throw IllegalArgumentException("Member \"$memberName\" not found in json.")
-    }
-
-    val elements = this.get(memberName) as? JsonArray
-            ?: throw IllegalArgumentException("Member \"$memberName'\" is not array.")
-    val result = mutableListOf<T>()
-    elements.forEach { element ->
-        result.add(element.toObject(classOfT))
-    }
-
-    return result
-}
 
 fun <T : Any> JsonElement.toObject(classOfT: KClass<T>): T = Gson().fromJson(this, classOfT.java)

@@ -28,13 +28,16 @@ package ru.endlesscode.producthuntlite
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import com.arellomobile.mvp.MvpAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import ru.endlesscode.producthuntlite.api.PostsResponse
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
+import ru.endlesscode.producthuntlite.api.PostData
 import ru.endlesscode.producthuntlite.api.RestApi
+import ru.gildor.coroutines.retrofit.Result
+import ru.gildor.coroutines.retrofit.awaitResult
+import ru.gildor.coroutines.retrofit.getOrThrow
 
 class MainActivity : MvpAppCompatActivity() {
     private lateinit var mProductsView: RecyclerView
@@ -50,17 +53,17 @@ class MainActivity : MvpAppCompatActivity() {
         mLayoutManager = LinearLayoutManager(this)
         mProductsView.layoutManager = mLayoutManager
 
-        // specify an adapter (see also next example)
-        val call = RestApi.instance.getCategoryFeed("tech")
-        call.enqueue(object : Callback<PostsResponse> {
-            override fun onFailure(call: Call<PostsResponse>, throwable: Throwable?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        launch(UI) {
+            val result = RestApi.instance.getCategoryFeed("tech").awaitResult()
+            var posts = emptyList<PostData>()
+            when (result) {
+                is Result.Ok -> posts = result.getOrThrow().posts
+                is Result.Error -> Log.d("Rest", result.toString())
+                is Result.Exception -> Log.d("Rest", "Exception: ", result.exception)
             }
 
-            override fun onResponse(call: Call<PostsResponse>, response: Response<PostsResponse>) {
-                mAdapter = PostsViewAdapter(response.body()!!.posts)
-                mProductsView.adapter = mAdapter
-            }
-        })
+            mAdapter = PostsViewAdapter(posts)
+            mProductsView.adapter = mAdapter
+        }
     }
 }

@@ -33,6 +33,16 @@ class RestApi private constructor(api: ProductHuntApi) : ProductHuntApi by api {
     companion object {
         private val token = "591f99547f569b05ba7d8777e2e0824eea16c440292cce1f8dfb3952cc9937ff"
 
+        private fun getAuthorizedClient(): OkHttpClient {
+            return getClientWithHeaders(
+                    "Accept" to "application/json",
+                    "Content-Type" to "application/json",
+                    "Authorization" to "Bearer $token",
+                    "Host" to "api.producthunt.com"
+            )
+        }
+
+        @get:Synchronized
         val instance: RestApi by lazy {
             val retrofit = Retrofit.Builder()
                     .client(getAuthorizedClient())
@@ -41,15 +51,6 @@ class RestApi private constructor(api: ProductHuntApi) : ProductHuntApi by api {
                     .build()
             val api = retrofit.create(ProductHuntApi::class.java)
             RestApi(api)
-        }
-
-        private fun getAuthorizedClient(): OkHttpClient {
-            return getClientWithHeaders(
-                    "Accept" to "application/json",
-                    "Content-Type" to "application/json",
-                    "Authorization" to "Bearer $token",
-                    "Host" to "api.producthunt.com"
-            )
         }
 
         private fun getClientWithHeaders(vararg headers: Pair<String, String>): OkHttpClient {
