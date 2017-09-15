@@ -54,7 +54,7 @@ class MainActivity : MvpAppCompatActivity() {
         mProductsView.layoutManager = mLayoutManager
 
         launch(UI) {
-            val result = RestApi.instance.getCategoryFeed("tech").awaitResult()
+            val result = RestApi.instance.getTopicFeed("tech").awaitResult()
             var posts = emptyList<PostData>()
             when (result) {
                 is Result.Ok -> posts = result.getOrThrow().posts

@@ -30,9 +30,9 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ProductHuntApi {
-    @GET("categories")
-    fun getCategories(): Call<CategoriesResponse>
+    @GET("topics")
+    fun getTopics(): Call<TopicsResponse>
 
-    @GET("categories/{category}/posts")
-    fun getCategoryFeed(@Path("category") category: String): Call<PostsResponse>
+    @GET("categories/{topic}/posts")
+    fun getTopicFeed(@Path("topic") topic: String): Call<PostsResponse>
 }

@@ -26,7 +26,6 @@
 package ru.endlesscode.producthuntlite.api
 
 import kotlinx.coroutines.experimental.runBlocking
-import org.junit.Ignore
 import org.junit.Test
 import ru.gildor.coroutines.retrofit.awaitResult
 import ru.gildor.coroutines.retrofit.getOrThrow
@@ -34,17 +33,17 @@ import kotlin.test.assertTrue
 
 class ProductHuntApiTest {
 
-    @Ignore("ProductHunt removed this from their API :( Need to use `/topics` instead")
     @Test
-    fun getCategories_mustReturnCategories() = runBlocking {
-        val result = RestApi.instance.getCategories().awaitResult()
-        val categories = result.getOrThrow().categories
-        assertTrue(categories.isNotEmpty())
+    fun getTopics_mustReturnTopics() = runBlocking {
+        val result = RestApi.instance.getTopics().awaitResult()
+        val topics = result.getOrThrow().topics
+
+        assertTrue(topics.isNotEmpty())
     }
 
     @Test
     fun getFeed_mustReturnPosts() = runBlocking {
-        val result = RestApi.instance.getCategoryFeed("tech").awaitResult()
+        val result = RestApi.instance.getTopicFeed("tech").awaitResult()
         val posts = result.getOrThrow().posts
 
         assertTrue(posts.isNotEmpty())

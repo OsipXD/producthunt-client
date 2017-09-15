@@ -28,14 +28,12 @@ package ru.endlesscode.producthuntlite.api
 import com.google.gson.annotations.SerializedName
 import java.net.URL
 
-class CategoriesResponse(val categories: List<CategoryData>)
+class TopicsResponse(val topics: List<TopicData>)
 
-data class CategoryData(
+data class TopicData(
         val id: Int,
         val slug: String,
-        val name: String,
-        val color: String,
-        @SerializedName("item_name") val itemName: String
+        val name: String
 )
 
 class PostsResponse(val posts: List<PostData>)

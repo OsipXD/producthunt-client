@@ -40,7 +40,7 @@ class JsonDeserializationTest(private val jsonName: String, private val expected
         @JvmStatic
         @Parameterized.Parameters
         fun data(): Collection<Array<out Any>> {
-            val category = CategoryData(id = 1, slug = "tech", name = "Tech", color = "#da552f", itemName = "product")
+            val topic = TopicData(id = 1, slug = "tech", name = "Tech")
             val post = PostData(
                     id = 1,
                     name = "Awesome Idea #17",
@@ -55,9 +55,8 @@ class JsonDeserializationTest(private val jsonName: String, private val expected
                     )
             )
 
-
             return listOf(
-                    arrayOf("Category", category),
+                    arrayOf("Topic", topic),
                     arrayOf("Post", post)
             )
         }
