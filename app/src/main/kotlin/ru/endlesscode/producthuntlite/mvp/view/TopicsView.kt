@@ -23,29 +23,20 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.ui.adapter
+package ru.endlesscode.producthuntlite.mvp.view
 
-import android.support.v7.widget.RecyclerView
-import android.view.ViewGroup
-import kotlinx.android.synthetic.main.topic_item.view.*
-import ru.endlesscode.producthuntlite.R
-import ru.endlesscode.producthuntlite.api.TopicData
-import ru.endlesscode.producthuntlite.load
-import ru.endlesscode.producthuntlite.ui.common.ViewTypeDelegateAdapter
-import ru.endlesscode.producthuntlite.ui.common.ViewTypeHolder
+import com.arellomobile.mvp.MvpView
+import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
+import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 
-class TopicDelegateAdapter : ViewTypeDelegateAdapter<TopicData> {
-    override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder = TopicViewHolder(parent)
+@StateStrategyType(AddToEndSingleStrategy::class)
+interface TopicsView : MvpView {
 
-    inner class TopicViewHolder(parent: ViewGroup) : ViewTypeHolder<TopicData>(parent, R.layout.topic_item) {
-        private val name = itemView.topic_name
-        private val desc = itemView.topic_desc
-        private val icon = itemView.topic_icon
+    fun updateView()
 
-        override fun bind(data: TopicData) {
-            name.text = data.name
-            desc.text = data.description
-            icon.load(data.image)
-        }
-    }
+    fun onStartLoading()
+
+    fun onEndLoading()
+
+    fun openTopic()
 }

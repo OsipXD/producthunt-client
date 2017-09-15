@@ -25,52 +25,18 @@
 
 package ru.endlesscode.producthuntlite.ui.adapter
 
-import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import ru.endlesscode.producthuntlite.api.TopicData
-import ru.endlesscode.producthuntlite.ui.common.AdapterConstants
-import ru.endlesscode.producthuntlite.ui.common.ViewType
-import ru.endlesscode.producthuntlite.ui.common.ViewTypeDelegateAdapter
+import ru.endlesscode.producthuntlite.mvp.presenter.TopicsPresenter
 
-class TopicsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class TopicsAdapter(private val presenter: TopicsPresenter) : RecyclerView.Adapter<TopicViewHolder>() {
 
-    private var items: ArrayList<ViewType>
-    private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter<*>>()
-    private val loadingItem = object : ViewType {
-        override val viewType: Int = AdapterConstants.LOADING
+    override fun getItemCount(): Int = presenter.topicsCount
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = TopicViewHolder(parent)
+
+    override fun onBindViewHolder(holder: TopicViewHolder, position: Int) {
+        presenter.onBindTopicAtPosition(position, holder)
     }
-
-    init {
-        delegateAdapters.put(AdapterConstants.LOADING, LoadingDelegateAdapter())
-        delegateAdapters.put(AdapterConstants.TOPICS, TopicDelegateAdapter())
-        items = arrayListOf(loadingItem)
-    }
-
-    override fun getItemCount(): Int = items.size
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
-            = delegateAdapters[viewType].onCreateViewHolder(parent)
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        delegateAdapters[getItemViewType(position)].onBindViewHolder(holder, items[position])
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return items[position].viewType
-    }
-
-    fun addTopics(news: List<TopicData>) {
-        val initPosition = items.size - 1
-        items.removeAt(initPosition)
-        notifyItemRemoved(initPosition)
-
-        items.addAll(news)
-        items.add(loadingItem)
-        this.notifyItemRangeChanged(initPosition, items.size + 1)
-    }
-
-
-    private fun getLastPosition() = if (items.lastIndex == -1) 0 else items.lastIndex
 }
 

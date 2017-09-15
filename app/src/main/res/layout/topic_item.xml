@@ -7,8 +7,9 @@
                 android:padding="15dp">
 
     <ImageView
+            tools:background="#ddd"
             android:id="@+id/topic_icon"
-            android:background="#ddd"
+            android:scaleType="centerCrop"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:contentDescription="@string/topic_icon_desc"

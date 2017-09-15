@@ -25,7 +25,6 @@
 
 package ru.endlesscode.producthuntlite.ui.fragment
 
-import android.app.Fragment
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -33,14 +32,19 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.arellomobile.mvp.MvpAppCompatFragment
+import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.topic_fragment.*
 import ru.endlesscode.producthuntlite.R
-import ru.endlesscode.producthuntlite.api.TopicData
 import ru.endlesscode.producthuntlite.inflate
+import ru.endlesscode.producthuntlite.mvp.presenter.TopicsPresenter
+import ru.endlesscode.producthuntlite.mvp.view.TopicsView
 import ru.endlesscode.producthuntlite.ui.adapter.TopicsAdapter
 
-class TopicsFragment : Fragment() {
+class TopicsFragment : MvpAppCompatFragment(), TopicsView {
 
+    @InjectPresenter
+    lateinit var presenter: TopicsPresenter
 
     private val topicList by lazy {
         topic_list.setHasFixedSize(true)
@@ -60,25 +64,26 @@ class TopicsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         topicList.init()
+    }
 
-        if (savedInstanceState == null) {
-            val news = (1..10).map {
-                TopicData(
-                        it,
-                        "slug$it",
-                        "Title $it",
-                        "Description $it", // time
-                        "http://lorempixel.com/200/200/technics/$it"
-                )
-            }
-
-            (topicList.adapter as TopicsAdapter).addTopics(news)
+    private fun RecyclerView.init() {
+        if (adapter == null) {
+            adapter = TopicsAdapter(presenter)
         }
     }
 
-    fun RecyclerView.init() {
-        if (adapter == null) {
-            adapter = TopicsAdapter()
-        }
+    override fun updateView() {
+        topicList.adapter.notifyDataSetChanged()
+    }
+
+    override fun onStartLoading() {
+
+    }
+
+    override fun onEndLoading() {
+    }
+
+    override fun openTopic() {
+
     }
 }

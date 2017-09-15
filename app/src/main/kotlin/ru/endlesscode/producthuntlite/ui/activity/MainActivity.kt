@@ -25,9 +25,9 @@
 
 package ru.endlesscode.producthuntlite.ui.activity
 
-import android.app.Fragment
-import android.app.FragmentManager
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import com.arellomobile.mvp.MvpAppCompatActivity
 import ru.endlesscode.producthuntlite.R
 import ru.endlesscode.producthuntlite.ui.fragment.TopicsFragment
@@ -43,8 +43,8 @@ class MainActivity : MvpAppCompatActivity() {
         }
     }
 
-    fun changeFragment(newFragment: Fragment, cleanStack: Boolean = false) {
-        val transaction = fragmentManager.beginTransaction()
+    private fun changeFragment(newFragment: Fragment, cleanStack: Boolean = false) {
+        val transaction = supportFragmentManager.beginTransaction()
         if (cleanStack) clearBackStack()
 
         transaction.replace(R.id.activity_content, newFragment)
@@ -52,7 +52,7 @@ class MainActivity : MvpAppCompatActivity() {
         transaction.commit()
     }
 
-    fun clearBackStack() {
+    private fun clearBackStack() {
         val manager = supportFragmentManager
         if (manager.backStackEntryCount > 0) {
             val first = manager.getBackStackEntryAt(0)

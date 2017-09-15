@@ -23,22 +23,27 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.ui.common
+package ru.endlesscode.producthuntlite.ui.adapter
 
-import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import kotlinx.android.synthetic.main.post_item.view.*
+import ru.endlesscode.producthuntlite.R
+import ru.endlesscode.producthuntlite.api.PostData
+import ru.endlesscode.producthuntlite.load
+import ru.endlesscode.producthuntlite.ui.common.ViewTypeHolder
 
-interface ViewTypeDelegateAdapter<T> {
+class PostViewHolder(parent: ViewGroup) : ViewTypeHolder(parent, R.layout.post_item) {
+    private var title: TextView = itemView.post_title
+    private var desc: TextView = itemView.post_desc
+    private var votes: TextView = itemView.post_votes
+    private var thumbnail: ImageView = itemView.post_thumbnail
 
-    abstract class Unit : ViewTypeDelegateAdapter<Unit> {
-        final override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {}
-    }
-
-    fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder
-
-    @Suppress("UNCHECKED_CAST")
-    fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
-        holder as ViewTypeHolder<T>
-        holder.bind(item as T)
+    fun bind(data: PostData) {
+        title.text = data.name
+        desc.text = data.desc
+        votes.text = data.votesCount.toString()
+        thumbnail.load(data.thumbnailUrl)
     }
 }

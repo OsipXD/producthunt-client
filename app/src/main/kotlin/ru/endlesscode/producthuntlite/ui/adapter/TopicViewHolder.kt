@@ -25,15 +25,22 @@
 
 package ru.endlesscode.producthuntlite.ui.adapter
 
-import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.topic_item.view.*
 import ru.endlesscode.producthuntlite.R
-import ru.endlesscode.producthuntlite.ui.common.ViewTypeDelegateAdapter
+import ru.endlesscode.producthuntlite.api.TopicData
+import ru.endlesscode.producthuntlite.load
+import ru.endlesscode.producthuntlite.mvp.view.TopicView
 import ru.endlesscode.producthuntlite.ui.common.ViewTypeHolder
 
-class LoadingDelegateAdapter : ViewTypeDelegateAdapter.Unit() {
+class TopicViewHolder(parent: ViewGroup) : ViewTypeHolder(parent, R.layout.topic_item), TopicView {
+    private val name = itemView.topic_name
+    private val desc = itemView.topic_desc
+    private val icon = itemView.topic_icon
 
-    override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder = LoadingViewHolder(parent)
-
-    class LoadingViewHolder(parent: ViewGroup) : ViewTypeHolder.Unit(parent, R.layout.loading)
+    override fun setData(data: TopicData) {
+        name.text = data.name
+        desc.text = data.description
+        icon.load(data.image)
+    }
 }

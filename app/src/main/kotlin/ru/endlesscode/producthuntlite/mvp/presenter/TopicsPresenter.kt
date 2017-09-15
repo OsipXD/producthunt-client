@@ -25,3 +25,63 @@
 
 package ru.endlesscode.producthuntlite.mvp.presenter
 
+import com.arellomobile.mvp.InjectViewState
+import com.arellomobile.mvp.MvpPresenter
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.run
+import ru.endlesscode.producthuntlite.api.ProductHunt
+import ru.endlesscode.producthuntlite.api.TopicData
+import ru.endlesscode.producthuntlite.mvp.view.TopicsView
+import ru.endlesscode.producthuntlite.ui.adapter.TopicViewHolder
+import ru.gildor.coroutines.retrofit.awaitResult
+import ru.gildor.coroutines.retrofit.getOrThrow
+
+@InjectViewState
+class TopicsPresenter : MvpPresenter<TopicsView>() {
+
+    private val topics = mutableListOf<TopicData>()
+    private var isInLoading = false
+
+    val topicsCount: Int
+        get() = topics.size
+
+    override fun onFirstViewAttach() {
+        this.loadTopics()
+    }
+
+    private fun loadTopics() {
+        if (isInLoading) return
+        isInLoading = true
+
+        viewState.onStartLoading()
+
+        launch(CommonPool) {
+            val result = ProductHunt.api.getTopics().awaitResult()
+            val topics = result.getOrThrow().topics
+            addTopics(topics)
+
+            run(UI) {
+                viewState.updateView()
+            }
+
+            onFinishLoading()
+        }
+    }
+
+    private fun addTopics(topics: List<TopicData>) {
+        this.topics.addAll(topics)
+    }
+
+    private fun onFinishLoading() {
+        if (!isInLoading) return
+        isInLoading = false
+
+        viewState.onEndLoading()
+    }
+
+    fun onBindTopicAtPosition(position: Int, holder: TopicViewHolder) {
+        holder.setData(topics[position])
+    }
+}

@@ -23,21 +23,12 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.api
+package ru.endlesscode.producthuntlite.mvp.view
 
-import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import com.arellomobile.mvp.MvpView
+import ru.endlesscode.producthuntlite.api.TopicData
 
-interface ProductHuntApi {
+interface TopicView : MvpView {
 
-    @GET("topics")
-    fun getTopics(
-            @Query("older") older: Int? = null,
-            @Query("per_page") perPage: Int = 10,
-            @Query("search[trending]") trending: Boolean = true): Call<TopicsResponse>
-
-    @GET("categories/{topic}/posts")
-    fun getTopicFeed(@Path("topic") topic: String): Call<PostsResponse>
+    fun setData(data: TopicData)
 }
