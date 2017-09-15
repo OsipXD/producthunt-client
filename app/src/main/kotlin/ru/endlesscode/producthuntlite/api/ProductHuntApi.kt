@@ -30,7 +30,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ProductHuntApi {
-    @GET("topics")
+    @GET("topics?search[trending]=true")
     fun getTopics(): Call<TopicsResponse>
 
     @GET("categories/{topic}/posts")
