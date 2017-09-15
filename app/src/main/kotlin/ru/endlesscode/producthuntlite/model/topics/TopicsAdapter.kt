@@ -23,12 +23,16 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.model.adapter
+package ru.endlesscode.producthuntlite.model.topics
 
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import ru.endlesscode.producthuntlite.api.TopicData
+import ru.endlesscode.producthuntlite.common.AdapterConstants
+import ru.endlesscode.producthuntlite.common.ViewType
+import ru.endlesscode.producthuntlite.common.ViewTypeDelegateAdapter
+import ru.endlesscode.producthuntlite.model.LoadingDelegateAdapter
 
 class TopicsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

@@ -23,10 +23,20 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.model.adapter
+package ru.endlesscode.producthuntlite.common
 
-object AdapterConstants {
-    val LOADING = 0
-    val TOPICS = 1
-    val POSTS = 2
+import android.support.v7.widget.RecyclerView
+import android.view.ViewGroup
+import ru.endlesscode.producthuntlite.inflate
+
+abstract class ViewTypeHolder<in T>(parent: ViewGroup, layoutId: Int) : RecyclerView.ViewHolder(
+        parent.inflate(layoutId)) {
+
+    open class Unit(parent: ViewGroup, layoutId: Int) : ViewTypeHolder<Unit>(parent, layoutId) {
+        final override fun bind(data: Unit) {
+            throw RuntimeException("Binding not allowed!")
+        }
+    }
+
+    abstract fun bind(data: T)
 }

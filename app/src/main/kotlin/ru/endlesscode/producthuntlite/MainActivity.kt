@@ -25,20 +25,46 @@
 
 package ru.endlesscode.producthuntlite
 
+import android.app.Fragment
+import android.app.FragmentManager
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import com.arellomobile.mvp.MvpAppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import ru.endlesscode.producthuntlite.view.TopicsFragment
 
 class MainActivity : MvpAppCompatActivity() {
-    private val topisView by lazy {
-        topics_view.setHasFixedSize(true)
-        topics_view.layoutManager = LinearLayoutManager(this)
-        topics_view
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        if (savedInstanceState == null) {
+            this.changeFragment(TopicsFragment())
+        }
+    }
+
+    fun changeFragment(newFragment: Fragment, cleanStack: Boolean = false) {
+        val transaction = fragmentManager.beginTransaction()
+        if (cleanStack) clearBackStack()
+
+        transaction.replace(R.id.activity_content, newFragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    fun clearBackStack() {
+        val manager = supportFragmentManager
+        if (manager.backStackEntryCount > 0) {
+            val first = manager.getBackStackEntryAt(0)
+            manager.popBackStack(first.id, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+    }
+
+    override fun onBackPressed() {
+        val fragmentManager = supportFragmentManager
+        if (fragmentManager.backStackEntryCount > 1) {
+            fragmentManager.popBackStack()
+        } else {
+            finish()
+        }
     }
 }

@@ -35,7 +35,7 @@ class ProductHuntApiTest {
 
     @Test
     fun getTopics_mustReturnTopics() = runBlocking {
-        val result = RestApi.instance.getTopics().awaitResult()
+        val result = ProductHunt.api.getTopics().awaitResult()
         val topics = result.getOrThrow().topics
 
         assertTrue(topics.isNotEmpty())
@@ -43,7 +43,7 @@ class ProductHuntApiTest {
 
     @Test
     fun getFeed_mustReturnPosts() = runBlocking {
-        val result = RestApi.instance.getTopicFeed("tech").awaitResult()
+        val result = ProductHunt.api.getTopicFeed("tech").awaitResult()
         val posts = result.getOrThrow().posts
 
         assertTrue(posts.isNotEmpty())

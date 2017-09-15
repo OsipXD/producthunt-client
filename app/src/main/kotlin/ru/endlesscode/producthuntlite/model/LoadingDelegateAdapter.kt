@@ -23,11 +23,13 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.model.adapter
+package ru.endlesscode.producthuntlite.model
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import ru.endlesscode.producthuntlite.R
+import ru.endlesscode.producthuntlite.common.ViewTypeDelegateAdapter
+import ru.endlesscode.producthuntlite.common.ViewTypeHolder
 
 class LoadingDelegateAdapter : ViewTypeDelegateAdapter.Unit() {
 

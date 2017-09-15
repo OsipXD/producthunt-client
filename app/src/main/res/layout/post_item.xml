@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp">
+
+    <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/post_thumbnail"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="15dp"
+            android:contentDescription="@string/thumbnail_desc"
+            android:background="#ddd"/>
+
+    <TextView
+            tools:text="My awesome product!"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/post_title"
+            android:ellipsize="end"
+            android:lines="1"
+            android:layout_toEndOf="@+id/post_thumbnail"
+            android:layout_alignParentTop="true"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"/>
+
+    <TextView
+            tools:text="It is awesome project for awesome people! And very-very-very long description here"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/post_desc"
+            android:layout_below="@+id/post_title"
+            android:layout_above="@+id/post_votes"
+            android:layout_alignParentEnd="true"
+            android:ellipsize="end"
+            android:lines="2"
+            android:layout_toEndOf="@+id/post_thumbnail"
+            android:textSize="13sp"
+            android:textColor="#999"
+            android:gravity="center_vertical"
+            android:lineSpacingMultiplier="0.95"/>
+
+    <TextView
+            tools:text="1984"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="5"
+            android:paddingTop="4dp"
+            android:layout_alignBottom="@+id/post_thumbnail"
+            android:layout_alignParentEnd="true"
+            android:drawableStart="@drawable/upvote_icon"
+            android:drawablePadding="2.5dp"
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            android:id="@+id/post_votes"/>
+</RelativeLayout>

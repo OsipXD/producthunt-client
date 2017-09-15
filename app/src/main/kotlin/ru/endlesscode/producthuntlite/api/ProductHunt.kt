@@ -29,7 +29,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RestApi private constructor(api: ProductHuntApi) : ProductHuntApi by api {
+class ProductHunt private constructor(api: ProductHuntApi) : ProductHuntApi by api {
     companion object {
         private val token = "591f99547f569b05ba7d8777e2e0824eea16c440292cce1f8dfb3952cc9937ff"
 
@@ -43,14 +43,14 @@ class RestApi private constructor(api: ProductHuntApi) : ProductHuntApi by api {
         }
 
         @get:Synchronized
-        val instance: RestApi by lazy {
+        val api: ProductHunt by lazy {
             val retrofit = Retrofit.Builder()
                     .client(getAuthorizedClient())
                     .baseUrl("https://api.producthunt.com/v1/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
-            val api = retrofit.create(ProductHuntApi::class.java)
-            RestApi(api)
+
+            ProductHunt(retrofit.create(ProductHuntApi::class.java))
         }
 
         private fun getClientWithHeaders(vararg headers: Pair<String, String>): OkHttpClient {
