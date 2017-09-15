@@ -23,19 +23,28 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite
+@file:JvmName("JsonKt")
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+package ru.endlesscode.producthuntlite.api
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see [Testing documentation](http://d.android.com/tools/testing)
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, (2 + 2).toLong())
+import com.google.gson.*
+import kotlin.reflect.KClass
+
+fun String.asJsonObject(): JsonObject = JsonParser().parse(this).asJsonObject
+
+fun <T : Any> JsonObject.getAsList(memberName: String, classOfT: KClass<T>): List<T> {
+    if (!this.has(memberName)) {
+        throw IllegalArgumentException("Member \"$memberName\" not found in json.")
     }
+
+    val elements = this.get(memberName) as? JsonArray
+            ?: throw IllegalArgumentException("Member \"$memberName'\" is not array.")
+    val result = mutableListOf<T>()
+    elements.forEach { element ->
+        result.add(element.toObject(classOfT))
+    }
+
+    return result
 }
+
+fun <T : Any> JsonElement.toObject(classOfT: KClass<T>): T = Gson().fromJson(this, classOfT.java)

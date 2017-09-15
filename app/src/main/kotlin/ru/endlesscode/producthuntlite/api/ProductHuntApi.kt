@@ -23,22 +23,16 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.model
+package ru.endlesscode.producthuntlite.api
 
-import com.google.gson.annotations.SerializedName
-import java.net.URL
+import retrofit2.Call
+import retrofit2.http.GET
+import retrofit2.http.Path
 
-data class PostData(
-        val id: Int,
-        val name: String,
-        val day: String,
-        val thumbnail: ThumbnailData,
-        @SerializedName("screenshot_url") val screenshotUrl: ScreenshotUrl,
-        @SerializedName("tagline") val desc: String,
-        @SerializedName("category_id") val categoryId: Int,
-        @SerializedName("votes_count") val votesCount: Int
-) {
-    val thumbnailUrl: URL
-        get() = thumbnail.imageUrl
+interface ProductHuntApi {
+    @GET("categories")
+    fun getCategories(): Call<CategoriesResponse>
+
+    @GET("categories/{category}/posts")
+    fun getCategoryFeed(@Path("category") category: String): Call<PostsResponse>
 }
-

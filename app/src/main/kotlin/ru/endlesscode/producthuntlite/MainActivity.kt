@@ -30,8 +30,11 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.arellomobile.mvp.MvpAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import ru.endlesscode.producthuntlite.model.PostData
-import ru.endlesscode.producthuntlite.model.ProductHuntApi
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import ru.endlesscode.producthuntlite.api.PostsResponse
+import ru.endlesscode.producthuntlite.api.RestApi
 
 class MainActivity : MvpAppCompatActivity() {
     private lateinit var mProductsView: RecyclerView
@@ -48,9 +51,16 @@ class MainActivity : MvpAppCompatActivity() {
         mProductsView.layoutManager = mLayoutManager
 
         // specify an adapter (see also next example)
-        val data = mutableListOf<PostData>()
-        ProductHuntApi.getCategoryFeed(data, "tech")
-        mAdapter = PostsViewAdapter(data)
-        mProductsView.adapter = mAdapter
+        val call = RestApi.instance.getCategoryFeed("tech")
+        call.enqueue(object : Callback<PostsResponse> {
+            override fun onFailure(call: Call<PostsResponse>, throwable: Throwable?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onResponse(call: Call<PostsResponse>, response: Response<PostsResponse>) {
+                mAdapter = PostsViewAdapter(response.body()!!.posts)
+                mProductsView.adapter = mAdapter
+            }
+        })
     }
 }

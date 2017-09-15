@@ -23,27 +23,43 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.model
+package ru.endlesscode.producthuntlite.api
 
-import org.junit.Ignore
-import org.junit.Test
-import kotlin.test.assertTrue
+import com.google.gson.annotations.SerializedName
+import java.net.URL
 
-class ProductHuntApiTest {
+class CategoriesResponse(val categories: List<CategoryData>)
 
-    @Test
-    fun getCategories_mustReturnCategories() {
-        val categories = ProductHuntApi.getCategories()
+data class CategoryData(
+        val id: Int,
+        val slug: String,
+        val name: String,
+        val color: String,
+        @SerializedName("item_name") val itemName: String
+)
 
-        assertTrue(categories.isNotEmpty())
-    }
+class PostsResponse(val posts: List<PostData>)
 
-    @Ignore
-    @Test
-    fun getFeed_mustReturnPosts() {
-        val posts = mutableListOf<PostData>()
-        ProductHuntApi.getCategoryFeed(posts, "tech")
-
-        assertTrue(posts.isNotEmpty())
-    }
+data class PostData(
+        val id: Int,
+        val name: String,
+        val day: String,
+        val thumbnail: ThumbnailData,
+        @SerializedName("screenshot_url") val screenshotUrl: ScreenshotUrl,
+        @SerializedName("tagline") val desc: String,
+        @SerializedName("category_id") val categoryId: Int,
+        @SerializedName("votes_count") val votesCount: Int
+) {
+    val thumbnailUrl: URL
+        get() = thumbnail.imageUrl
 }
+
+data class ScreenshotUrl(
+        @SerializedName("300px") val px300: URL,
+        @SerializedName("850px") val px850: URL
+)
+
+data class ThumbnailData(
+        val id: Int,
+        @SerializedName("image_url") val imageUrl: URL
+)

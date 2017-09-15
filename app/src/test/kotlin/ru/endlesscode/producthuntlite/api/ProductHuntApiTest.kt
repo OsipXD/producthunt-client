@@ -23,12 +23,28 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.model
+package ru.endlesscode.producthuntlite.api
 
-import com.google.gson.annotations.SerializedName
-import java.net.URL
+import org.junit.Test
+import kotlin.test.assertTrue
 
-data class ThumbnailData(
-        val id: Int,
-        @SerializedName("image_url") val imageUrl: URL
-)
+class ProductHuntApiTest {
+
+    @Test
+    fun getCategories_mustReturnCategories() {
+        val call = RestApi.instance.getCategories()
+        val response = call.execute()
+        val categories = response.body()?.categories
+
+        assertTrue(categories!!.isNotEmpty())
+    }
+
+    @Test
+    fun getFeed_mustReturnPosts() {
+        val call = RestApi.instance.getCategoryFeed("tech")
+        val response = call.execute()
+        val posts = response.body()?.posts
+
+        assertTrue(posts!!.isNotEmpty())
+    }
+}

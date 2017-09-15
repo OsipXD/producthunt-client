@@ -23,15 +23,13 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.model
+package ru.endlesscode.producthuntlite.api
 
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import ru.endlesscode.producthuntlite.FileHelper
-import ru.endlesscode.producthuntlite.asJsonObject
-import ru.endlesscode.producthuntlite.toObject
 import java.net.URL
 import kotlin.test.assertEquals
 

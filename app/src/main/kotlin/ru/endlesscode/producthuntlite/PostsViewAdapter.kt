@@ -31,7 +31,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import ru.endlesscode.producthuntlite.model.PostData
+import ru.endlesscode.producthuntlite.api.PostData
 
 class PostsViewAdapter(private val mDataset: List<PostData>) : RecyclerView.Adapter<PostsViewAdapter.ViewHolder>() {
 
@@ -53,7 +53,7 @@ class PostsViewAdapter(private val mDataset: List<PostData>) : RecyclerView.Adap
         private var title: TextView = postCard.findViewById(R.id.postTitle)
         private var desc: TextView = postCard.findViewById(R.id.postDesc)
         private var votes: TextView = postCard.findViewById(R.id.postVotes)
-        private var thumbnail: ImageView = postCard.findViewById(R.id.postTitle)
+        private var thumbnail: ImageView = postCard.findViewById(R.id.postThumbnail)
 
         fun setProduct(post: PostData) {
             title.text = post.name
