@@ -27,12 +27,13 @@ package ru.endlesscode.producthuntlite.ui.fragment
 
 import android.app.Fragment
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.posts_fragment.*
+import kotlinx.android.synthetic.main.topic_fragment.*
 import ru.endlesscode.producthuntlite.R
 import ru.endlesscode.producthuntlite.api.TopicData
 import ru.endlesscode.producthuntlite.inflate
@@ -41,12 +42,17 @@ import ru.endlesscode.producthuntlite.ui.adapter.TopicsAdapter
 class TopicsFragment : Fragment() {
     private val topicList by lazy {
         topic_list.setHasFixedSize(true)
-        topic_list.layoutManager = LinearLayoutManager(this.activity)
+
+        val layoutManager = LinearLayoutManager(this.activity)
+        topic_list.layoutManager = layoutManager
+
+        val dividerItemDecoration = DividerItemDecoration(topic_list.context, layoutManager.orientation)
+        topic_list.addItemDecoration(dividerItemDecoration)
         topic_list
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            container?.inflate(R.layout.posts_fragment)
+            container?.inflate(R.layout.topic_fragment)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -54,15 +60,14 @@ class TopicsFragment : Fragment() {
         topicList.init()
 
         if (savedInstanceState == null) {
-            val news = mutableListOf<TopicData>()
-            for (i in 1..10) {
-                news.add(TopicData(
-                        i,
-                        "slug$i",
-                        "Title $i",
-                        "Description $i", // time
-                        "http://lorempixel.com/200/200/technics/$i"
-                ))
+            val news = (1..10).map {
+                TopicData(
+                        it,
+                        "slug$it",
+                        "Title $it",
+                        "Description $it", // time
+                        "http://lorempixel.com/200/200/technics/$it"
+                )
             }
 
             (topicList.adapter as TopicsAdapter).addTopics(news)
