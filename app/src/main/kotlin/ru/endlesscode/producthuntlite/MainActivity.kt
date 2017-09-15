@@ -27,44 +27,18 @@ package ru.endlesscode.producthuntlite
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Log
 import com.arellomobile.mvp.MvpAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
-import ru.endlesscode.producthuntlite.api.PostData
-import ru.endlesscode.producthuntlite.api.RestApi
-import ru.endlesscode.producthuntlite.model.adapter.PostsAdapter
-import ru.gildor.coroutines.retrofit.Result
-import ru.gildor.coroutines.retrofit.awaitResult
-import ru.gildor.coroutines.retrofit.getOrThrow
 
 class MainActivity : MvpAppCompatActivity() {
-    private lateinit var mProductsView: RecyclerView
-    private lateinit var mLayoutManager: LinearLayoutManager
-    private lateinit var mAdapter: PostsAdapter
+    private val topisView by lazy {
+        topics_view.setHasFixedSize(true)
+        topics_view.layoutManager = LinearLayoutManager(this)
+        topics_view
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        mProductsView = productsView
-        productsView.setHasFixedSize(true)
-        mLayoutManager = LinearLayoutManager(this)
-        mProductsView.layoutManager = mLayoutManager
-
-        launch(UI) {
-            val result = RestApi.instance.getTopicFeed("tech").awaitResult()
-            var posts = emptyList<PostData>()
-            when (result) {
-                is Result.Ok -> posts = result.getOrThrow().posts
-                is Result.Error -> Log.d("Rest", result.toString())
-                is Result.Exception -> Log.d("Rest", "Exception: ", result.exception)
-            }
-
-            mAdapter = PostsAdapter(posts)
-            mProductsView.adapter = mAdapter
-        }
     }
 }

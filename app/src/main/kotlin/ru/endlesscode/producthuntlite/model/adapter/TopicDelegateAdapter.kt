@@ -25,40 +25,25 @@
 
 package ru.endlesscode.producthuntlite.model.adapter
 
-import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import kotlinx.android.synthetic.main.topic_layout.view.*
 import ru.endlesscode.producthuntlite.R
-import ru.endlesscode.producthuntlite.api.PostData
-import ru.endlesscode.producthuntlite.extensions.inflate
+import ru.endlesscode.producthuntlite.api.TopicData
+import ru.endlesscode.producthuntlite.load
 
-class PostsAdapter(private val mDataset: List<PostData>) : RecyclerView.Adapter<PostsAdapter.ViewHolder>() {
+class TopicDelegateAdapter : ViewTypeDelegateAdapter<TopicData> {
+    override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder = TopicViewHolder(parent)
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.setProduct(mDataset[position])
-    }
+    inner class TopicViewHolder(parent: ViewGroup) : ViewTypeHolder<TopicData>(parent, R.layout.topic_layout) {
+        private val name = itemView.topic_name
+        private val desc = itemView.topic_desc
+        private val icon = itemView.topic_icon
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: CardView = parent.inflate(R.layout.post_card)
-        return ViewHolder(view)
-    }
-
-    override fun getItemCount(): Int {
-        return mDataset.size
-    }
-
-    class ViewHolder(postCard: CardView) : RecyclerView.ViewHolder(postCard) {
-        private var title: TextView = postCard.findViewById(R.id.postTitle)
-        private var desc: TextView = postCard.findViewById(R.id.postDesc)
-        private var votes: TextView = postCard.findViewById(R.id.postVotes)
-        private var thumbnail: ImageView = postCard.findViewById(R.id.postThumbnail)
-
-        fun setProduct(post: PostData) {
-            title.text = post.name
-            desc.text = post.desc
-            votes.text = post.votesCount.toString()
+        override fun bind(data: TopicData) {
+            name.text = data.name
+            desc.text = data.description
+            icon.load(data.image)
         }
     }
 }

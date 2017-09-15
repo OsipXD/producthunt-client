@@ -23,46 +23,20 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.api
+package ru.endlesscode.producthuntlite.model.adapter
 
-import com.google.gson.annotations.SerializedName
-import ru.endlesscode.producthuntlite.model.adapter.AdapterConstants
-import ru.endlesscode.producthuntlite.model.adapter.ViewType
+import android.support.v7.widget.RecyclerView
+import android.view.ViewGroup
+import ru.endlesscode.producthuntlite.inflate
 
-class TopicsResponse(val topics: List<TopicData>)
+abstract class ViewTypeHolder<in T>(parent: ViewGroup, layoutId: Int) : RecyclerView.ViewHolder(
+        parent.inflate(layoutId)) {
 
-data class TopicData(
-        val id: Int,
-        val slug: String,
-        val name: String,
-        val description: String,
-        val image: String?
-) : ViewType {
-    override val viewType: Int = AdapterConstants.TOPICS
+    open class Unit(parent: ViewGroup, layoutId: Int) : ViewTypeHolder<Unit>(parent, layoutId) {
+        final override fun bind(data: Unit) {
+            throw RuntimeException("Binding not allowed!")
+        }
+    }
+
+    abstract fun bind(data: T)
 }
-
-class PostsResponse(val posts: List<PostData>)
-
-data class PostData(
-        val id: Int,
-        val name: String,
-        val day: String,
-        val thumbnail: ThumbnailData,
-        @SerializedName("screenshot_url") val screenshotUrl: ScreenshotUrl,
-        @SerializedName("tagline") val desc: String,
-        @SerializedName("category_id") val categoryId: Int,
-        @SerializedName("votes_count") val votesCount: Int
-) {
-    val thumbnailUrl: String
-        get() = thumbnail.imageUrl
-}
-
-data class ScreenshotUrl(
-        @SerializedName("300px") val px300: String,
-        @SerializedName("850px") val px850: String
-)
-
-data class ThumbnailData(
-        val id: Int,
-        @SerializedName("image_url") val imageUrl: String
-)

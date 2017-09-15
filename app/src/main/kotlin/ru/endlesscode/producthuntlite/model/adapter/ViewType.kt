@@ -23,46 +23,8 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.api
+package ru.endlesscode.producthuntlite.model.adapter
 
-import com.google.gson.annotations.SerializedName
-import ru.endlesscode.producthuntlite.model.adapter.AdapterConstants
-import ru.endlesscode.producthuntlite.model.adapter.ViewType
-
-class TopicsResponse(val topics: List<TopicData>)
-
-data class TopicData(
-        val id: Int,
-        val slug: String,
-        val name: String,
-        val description: String,
-        val image: String?
-) : ViewType {
-    override val viewType: Int = AdapterConstants.TOPICS
+interface ViewType {
+    val viewType: Int
 }
-
-class PostsResponse(val posts: List<PostData>)
-
-data class PostData(
-        val id: Int,
-        val name: String,
-        val day: String,
-        val thumbnail: ThumbnailData,
-        @SerializedName("screenshot_url") val screenshotUrl: ScreenshotUrl,
-        @SerializedName("tagline") val desc: String,
-        @SerializedName("category_id") val categoryId: Int,
-        @SerializedName("votes_count") val votesCount: Int
-) {
-    val thumbnailUrl: String
-        get() = thumbnail.imageUrl
-}
-
-data class ScreenshotUrl(
-        @SerializedName("300px") val px300: String,
-        @SerializedName("850px") val px850: String
-)
-
-data class ThumbnailData(
-        val id: Int,
-        @SerializedName("image_url") val imageUrl: String
-)
