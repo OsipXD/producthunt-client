@@ -26,8 +26,6 @@
 package ru.endlesscode.producthuntlite.api
 
 import com.google.gson.annotations.SerializedName
-import ru.endlesscode.producthuntlite.ui.common.AdapterConstants
-import ru.endlesscode.producthuntlite.ui.common.ViewType
 
 class TopicsResponse(val topics: List<TopicData>)
 
@@ -37,9 +35,7 @@ data class TopicData(
         val name: String,
         val description: String,
         val image: String?
-) : ViewType {
-    override val viewType: Int = AdapterConstants.TOPICS
-}
+)
 
 class PostsResponse(val posts: List<PostData>)
 
