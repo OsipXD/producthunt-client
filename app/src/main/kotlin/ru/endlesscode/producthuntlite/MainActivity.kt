@@ -35,6 +35,7 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import ru.endlesscode.producthuntlite.api.PostData
 import ru.endlesscode.producthuntlite.api.RestApi
+import ru.endlesscode.producthuntlite.model.adapter.PostsAdapter
 import ru.gildor.coroutines.retrofit.Result
 import ru.gildor.coroutines.retrofit.awaitResult
 import ru.gildor.coroutines.retrofit.getOrThrow
@@ -42,7 +43,7 @@ import ru.gildor.coroutines.retrofit.getOrThrow
 class MainActivity : MvpAppCompatActivity() {
     private lateinit var mProductsView: RecyclerView
     private lateinit var mLayoutManager: LinearLayoutManager
-    private lateinit var mAdapter: PostsViewAdapter
+    private lateinit var mAdapter: PostsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +63,7 @@ class MainActivity : MvpAppCompatActivity() {
                 is Result.Exception -> Log.d("Rest", "Exception: ", result.exception)
             }
 
-            mAdapter = PostsViewAdapter(posts)
+            mAdapter = PostsAdapter(posts)
             mProductsView.adapter = mAdapter
         }
     }

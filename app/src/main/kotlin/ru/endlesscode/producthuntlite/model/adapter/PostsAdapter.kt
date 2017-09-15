@@ -23,25 +23,25 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite
+package ru.endlesscode.producthuntlite.model.adapter
 
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import ru.endlesscode.producthuntlite.R
 import ru.endlesscode.producthuntlite.api.PostData
+import ru.endlesscode.producthuntlite.extensions.inflate
 
-class PostsViewAdapter(private val mDataset: List<PostData>) : RecyclerView.Adapter<PostsViewAdapter.ViewHolder>() {
+class PostsAdapter(private val mDataset: List<PostData>) : RecyclerView.Adapter<PostsAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.setProduct(mDataset[position])
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: CardView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.post_card, parent, false) as CardView
+        val view: CardView = parent.inflate(R.layout.post_card)
         return ViewHolder(view)
     }
 
