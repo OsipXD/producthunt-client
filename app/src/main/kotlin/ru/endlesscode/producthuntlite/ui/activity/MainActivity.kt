@@ -29,10 +29,13 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import com.arellomobile.mvp.MvpAppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import ru.endlesscode.producthuntlite.R
 import ru.endlesscode.producthuntlite.ui.fragment.TopicsFragment
 
 class MainActivity : MvpAppCompatActivity() {
+
+    private val toolbar by lazy { custom_toolbar }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +44,8 @@ class MainActivity : MvpAppCompatActivity() {
         if (savedInstanceState == null) {
             this.changeFragment(TopicsFragment())
         }
+
+        setSupportActionBar(toolbar)
     }
 
     private fun changeFragment(newFragment: Fragment, cleanStack: Boolean = false) {

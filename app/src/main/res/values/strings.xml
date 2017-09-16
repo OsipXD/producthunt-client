@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProductHunt Lite</string>
+    <string name="Topics">Topics</string>
     <string name="thumbnail_desc">Thumbnail</string>
     <string name="topic_icon_desc">Topic Icon</string>
 </resources>
