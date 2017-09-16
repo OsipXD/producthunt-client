@@ -25,6 +25,7 @@
 
 package ru.endlesscode.producthuntlite.ui.fragment
 
+import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -37,6 +38,17 @@ import ru.endlesscode.producthuntlite.ui.adapter.PostsAdapter
 
 class PostsFragment : ItemsFragment<PostsPresenter>() {
 
+    companion object {
+        fun instance(topicId: Int): PostsFragment {
+            val args = Bundle()
+            args.putInt(PostsPresenter.TOPIC_ID, topicId)
+
+            val fragment = PostsFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
     @InjectPresenter
     override lateinit var presenter: PostsPresenter
 
@@ -48,7 +60,9 @@ class PostsFragment : ItemsFragment<PostsPresenter>() {
     }
 
     @ProvidePresenter
-    fun providePresenter() = PostsPresenter(1)
+    fun providePresenter() = PostsPresenter(
+            arguments.getInt(PostsPresenter.TOPIC_ID)
+    )
 
     override fun createAdapter() = PostsAdapter(presenter)
 

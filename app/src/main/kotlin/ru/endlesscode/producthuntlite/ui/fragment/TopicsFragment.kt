@@ -32,6 +32,7 @@ import kotlinx.android.synthetic.main.topics_fragment.*
 import ru.endlesscode.producthuntlite.R
 import ru.endlesscode.producthuntlite.mvp.common.Item
 import ru.endlesscode.producthuntlite.mvp.presenter.TopicsPresenter
+import ru.endlesscode.producthuntlite.ui.activity.MainActivity
 import ru.endlesscode.producthuntlite.ui.adapter.TopicsAdapter
 
 class TopicsFragment : ItemsFragment<TopicsPresenter>() {
@@ -49,6 +50,7 @@ class TopicsFragment : ItemsFragment<TopicsPresenter>() {
     override fun createAdapter() = TopicsAdapter(presenter)
 
     override fun openItem(item: Item) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val activity = activity as MainActivity
+        activity.changeFragment(PostsFragment.instance(item.id))
     }
 }
