@@ -28,6 +28,7 @@ package ru.endlesscode.producthuntlite.mvp.presenter
 import com.arellomobile.mvp.MvpPresenter
 import ru.endlesscode.producthuntlite.doInBackground
 import ru.endlesscode.producthuntlite.mvp.common.Item
+import ru.endlesscode.producthuntlite.mvp.common.ItemHolder
 import ru.endlesscode.producthuntlite.mvp.common.ItemList
 import ru.endlesscode.producthuntlite.mvp.view.ItemsView
 
@@ -60,5 +61,9 @@ abstract class ItemsPresenter<TItem : Item> : MvpPresenter<ItemsView>(), ItemLis
             addItems(items)
             viewState.updateView()
         }
+    }
+
+    fun itemClicked(holder: ItemHolder<TItem>) {
+        viewState.openItem(holder.item)
     }
 }

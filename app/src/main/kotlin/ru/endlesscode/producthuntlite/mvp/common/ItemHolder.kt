@@ -25,7 +25,8 @@
 
 package ru.endlesscode.producthuntlite.mvp.common
 
-interface DataHolder<in T> {
+interface ItemHolder<T : Item> {
+    var item: T
 
     fun setData(data: T)
 }

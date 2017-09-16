@@ -31,7 +31,7 @@ import android.support.v4.app.FragmentManager
 import com.arellomobile.mvp.MvpAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.endlesscode.producthuntlite.R
-import ru.endlesscode.producthuntlite.ui.fragment.PostsFragment
+import ru.endlesscode.producthuntlite.ui.fragment.TopicsFragment
 
 class MainActivity : MvpAppCompatActivity() {
 
@@ -42,13 +42,11 @@ class MainActivity : MvpAppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
-            this.changeFragment(PostsFragment())
+            this.changeFragment(TopicsFragment())
         }
-
-        setSupportActionBar(toolbar)
     }
 
-    private fun changeFragment(newFragment: Fragment, cleanStack: Boolean = false) {
+    fun changeFragment(newFragment: Fragment, cleanStack: Boolean = false) {
         val transaction = supportFragmentManager.beginTransaction()
         if (cleanStack) clearBackStack()
 

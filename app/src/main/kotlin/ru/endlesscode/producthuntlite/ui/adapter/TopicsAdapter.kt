@@ -31,6 +31,6 @@ import ru.endlesscode.producthuntlite.mvp.presenter.TopicsPresenter
 
 class TopicsAdapter(presenter: TopicsPresenter) : ItemsAdapter<TopicData, TopicViewHolder>(presenter) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = TopicViewHolder(parent)
+    override fun createViewHolder(parent: ViewGroup) = TopicViewHolder(parent)
 }
 

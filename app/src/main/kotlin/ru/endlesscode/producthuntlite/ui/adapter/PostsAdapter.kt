@@ -31,5 +31,5 @@ import ru.endlesscode.producthuntlite.mvp.presenter.PostsPresenter
 
 class PostsAdapter(presenter: PostsPresenter) : ItemsAdapter<PostData, PostViewHolder>(presenter) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder = PostViewHolder(parent)
+    override fun createViewHolder(parent: ViewGroup): PostViewHolder = PostViewHolder(parent)
 }

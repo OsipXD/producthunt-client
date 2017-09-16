@@ -34,11 +34,16 @@ import ru.endlesscode.producthuntlite.mvp.view.TopicView
 import ru.endlesscode.producthuntlite.ui.common.ViewTypeHolder
 
 class TopicViewHolder(parent: ViewGroup) : ViewTypeHolder(parent, R.layout.topic_item), TopicView {
+
     private val name = itemView.topic_name
     private val desc = itemView.topic_desc
     private val icon = itemView.topic_icon
 
+    override lateinit var item: TopicData
+
     override fun setData(data: TopicData) {
+        item = data
+
         name.text = data.name
         desc.text = data.description
         icon.load(data.image)

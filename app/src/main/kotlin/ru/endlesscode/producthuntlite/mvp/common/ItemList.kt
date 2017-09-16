@@ -28,7 +28,7 @@ package ru.endlesscode.producthuntlite.mvp.common
 import retrofit2.Call
 import ru.endlesscode.producthuntlite.api.ListWrapper
 
-interface ItemList<T> {
+interface ItemList<T : Item> {
     val items: MutableList<T>
 
     var isInLoading: Boolean
@@ -53,7 +53,7 @@ interface ItemList<T> {
         isInLoading = false
     }
 
-    fun onBindItemAtPosition(position: Int, holder: DataHolder<T>) {
+    fun onBindItemAtPosition(position: Int, holder: ItemHolder<T>) {
         holder.setData(items[position])
     }
 

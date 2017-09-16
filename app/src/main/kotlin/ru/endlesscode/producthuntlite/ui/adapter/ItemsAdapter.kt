@@ -26,17 +26,29 @@
 package ru.endlesscode.producthuntlite.ui.adapter
 
 import android.support.v7.widget.RecyclerView
-import ru.endlesscode.producthuntlite.mvp.common.DataHolder
+import android.view.ViewGroup
 import ru.endlesscode.producthuntlite.mvp.common.Item
+import ru.endlesscode.producthuntlite.mvp.common.ItemHolder
 import ru.endlesscode.producthuntlite.mvp.presenter.ItemsPresenter
 import ru.endlesscode.producthuntlite.ui.common.ViewTypeHolder
 
 abstract class ItemsAdapter<T : Item, THolder>(val presenter: ItemsPresenter<T>) : RecyclerView.Adapter<THolder>()
-        where THolder : ViewTypeHolder, THolder : DataHolder<T> {
+        where THolder : ViewTypeHolder, THolder : ItemHolder<T> {
 
     override fun getItemCount() = presenter.count
 
     override fun onBindViewHolder(holder: THolder, position: Int) {
         presenter.onBindItemAtPosition(position, holder)
     }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): THolder {
+        val holder = createViewHolder(parent)
+        holder.itemView.setOnClickListener {
+            presenter.itemClicked(holder)
+        }
+
+        return holder
+    }
+
+    abstract fun createViewHolder(parent: ViewGroup): THolder
 }
