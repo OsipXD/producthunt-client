@@ -26,11 +26,13 @@
 package ru.endlesscode.producthuntlite.mvp.presenter
 
 import com.arellomobile.mvp.InjectViewState
-import ru.endlesscode.producthuntlite.api.PostData
+import retrofit2.Call
+import ru.endlesscode.producthuntlite.api.ListWrapper
 import ru.endlesscode.producthuntlite.api.ProductHunt
+import ru.endlesscode.producthuntlite.api.TopicData
 
 @InjectViewState
-class PostsPresenter(val topicId: Int) : ItemsPresenter<PostData>() {
+class TopicsPresenter : ItemsPresenter<TopicData>() {
 
-    override fun getApiCall(before: Int?) = ProductHunt.api.getTopicFeed(topicId, before)
+    override fun getApiCall(before: Int?): Call<out ListWrapper<TopicData>> = ProductHunt.api.getTopics(before)
 }

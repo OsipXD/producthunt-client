@@ -25,12 +25,36 @@
 
 package ru.endlesscode.producthuntlite.mvp.presenter
 
-import com.arellomobile.mvp.InjectViewState
-import ru.endlesscode.producthuntlite.api.PostData
-import ru.endlesscode.producthuntlite.api.ProductHunt
+import com.arellomobile.mvp.MvpPresenter
+import ru.endlesscode.producthuntlite.doInBackground
+import ru.endlesscode.producthuntlite.mvp.common.Item
+import ru.endlesscode.producthuntlite.mvp.common.ItemList
+import ru.endlesscode.producthuntlite.mvp.view.ItemsView
 
-@InjectViewState
-class PostsPresenter(val topicId: Int) : ItemsPresenter<PostData>() {
+abstract class ItemsPresenter<TItem : Item> : MvpPresenter<ItemsView>(), ItemList<TItem> {
 
-    override fun getApiCall(before: Int?) = ProductHunt.api.getTopicFeed(topicId, before)
+    override val items: MutableList<TItem> = mutableListOf()
+    override var isInLoading = false
+
+    override fun loadItems(append: Boolean) {
+        if (isInLoading) return
+        isInLoading = true
+
+        viewState.onStartRefreshing()
+        getApiCall().doInBackground { items ->
+            addItems(items, append)
+            viewState.updateView()
+            viewState.onEndRefreshing()
+        }
+    }
+
+    override fun requestItems() {
+        if (isInLoading) return
+        isInLoading = true
+
+        getApiCall(before = items.last().id).doInBackground { items ->
+            addItems(items)
+            viewState.updateView()
+        }
+    }
 }

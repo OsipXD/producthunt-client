@@ -23,20 +23,8 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.mvp.view
+package ru.endlesscode.producthuntlite.mvp.common
 
-import com.arellomobile.mvp.MvpView
-import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
-import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
-
-@StateStrategyType(AddToEndSingleStrategy::class)
-interface TopicsView : MvpView {
-
-    fun updateView()
-
-    fun onStartRefreshing()
-
-    fun onEndRefreshing()
-
-    fun openItem()
+interface Item {
+    val id: Int
 }

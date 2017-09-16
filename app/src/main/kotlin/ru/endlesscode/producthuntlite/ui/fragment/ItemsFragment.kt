@@ -38,12 +38,13 @@ import kotlinx.android.synthetic.main.topics_fragment.*
 import ru.endlesscode.producthuntlite.R
 import ru.endlesscode.producthuntlite.addOnScrollListener
 import ru.endlesscode.producthuntlite.inflate
+import ru.endlesscode.producthuntlite.mvp.common.Item
 import ru.endlesscode.producthuntlite.mvp.presenter.TopicsPresenter
-import ru.endlesscode.producthuntlite.mvp.view.TopicsView
+import ru.endlesscode.producthuntlite.mvp.view.ItemsView
 import ru.endlesscode.producthuntlite.ui.adapter.TopicsAdapter
 import ru.endlesscode.producthuntlite.ui.common.InfiniteScrollListener
 
-class TopicsFragment : MvpAppCompatFragment(), TopicsView {
+class ItemsFragment : MvpAppCompatFragment(), ItemsView {
 
     @InjectPresenter
     lateinit var presenter: TopicsPresenter
@@ -67,7 +68,7 @@ class TopicsFragment : MvpAppCompatFragment(), TopicsView {
     }
 
     private fun RecyclerView.init() {
-        this.layoutManager = LinearLayoutManager(this@TopicsFragment.context)
+        this.layoutManager = LinearLayoutManager(this@ItemsFragment.context)
 
         val dividerItemDecoration = DividerItemDecoration(topics_list.context,
                 (layoutManager as LinearLayoutManager).orientation)
@@ -95,7 +96,7 @@ class TopicsFragment : MvpAppCompatFragment(), TopicsView {
         topicsRefresh.isRefreshing = false
     }
 
-    override fun openItem() {
+    override fun openItem(item: Item) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

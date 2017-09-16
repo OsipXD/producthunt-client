@@ -23,14 +23,21 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.mvp.presenter
+package ru.endlesscode.producthuntlite.mvp.view
 
-import com.arellomobile.mvp.InjectViewState
-import ru.endlesscode.producthuntlite.api.PostData
-import ru.endlesscode.producthuntlite.api.ProductHunt
+import com.arellomobile.mvp.MvpView
+import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
+import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
+import ru.endlesscode.producthuntlite.mvp.common.Item
 
-@InjectViewState
-class PostsPresenter(val topicId: Int) : ItemsPresenter<PostData>() {
+@StateStrategyType(AddToEndSingleStrategy::class)
+interface ItemsView : MvpView {
 
-    override fun getApiCall(before: Int?) = ProductHunt.api.getTopicFeed(topicId, before)
+    fun updateView()
+
+    fun onStartRefreshing()
+
+    fun onEndRefreshing()
+
+    fun openItem(item: Item)
 }
