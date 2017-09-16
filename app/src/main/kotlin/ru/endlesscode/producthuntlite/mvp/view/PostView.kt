@@ -26,10 +26,10 @@
 package ru.endlesscode.producthuntlite.mvp.view
 
 import com.arellomobile.mvp.MvpView
-import ru.endlesscode.producthuntlite.api.TopicData
+import ru.endlesscode.producthuntlite.api.PostData
 import ru.endlesscode.producthuntlite.mvp.common.DataHolder
 
-interface TopicView : MvpView, DataHolder<TopicData> {
+interface PostView : MvpView, DataHolder<PostData> {
 
-    override fun setData(data: TopicData)
+    override fun setData(data: PostData)
 }

@@ -34,9 +34,10 @@ interface ProductHuntApi {
     @GET("topics")
     fun getTopics(
             @Query("older") before: Int? = null,
-            @Query("newer") after: Int? = null,
             @Query("per_page") perPage: Int = 15): Call<TopicsResponse>
 
     @GET("posts/all")
-    fun getTopicFeed(@Query("search[topic]") topic: Int): Call<PostsResponse>
+    fun getTopicFeed(
+            @Query("search[topic]") topic: Int,
+            @Query("older") before: Int? = null): Call<PostsResponse>
 }

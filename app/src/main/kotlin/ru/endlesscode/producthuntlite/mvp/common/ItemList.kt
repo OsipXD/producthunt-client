@@ -23,13 +23,39 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.mvp.view
+package ru.endlesscode.producthuntlite.mvp.common
 
-import com.arellomobile.mvp.MvpView
-import ru.endlesscode.producthuntlite.api.TopicData
-import ru.endlesscode.producthuntlite.mvp.common.DataHolder
+import retrofit2.Call
+import ru.endlesscode.producthuntlite.api.ListWrapper
 
-interface TopicView : MvpView, DataHolder<TopicData> {
+interface ItemList<T> {
+    val items: MutableList<T>
 
-    override fun setData(data: TopicData)
+    var isInLoading: Boolean
+
+    val count
+        get() = items.size
+
+    fun refresh() {
+        loadItems(append = false)
+    }
+
+    fun loadItems(append: Boolean = true)
+
+    fun requestItems()
+
+    fun addItems(topics: List<T>, append: Boolean = true) {
+        if (!append) {
+            this.items.clear()
+        }
+
+        this.items.addAll(topics)
+        isInLoading = false
+    }
+
+    fun onBindItemAtPosition(position: Int, holder: DataHolder<T>) {
+        holder.setData(items[position])
+    }
+
+    fun getApiCall(before: Int? = null): Call<out ListWrapper<T>>
 }

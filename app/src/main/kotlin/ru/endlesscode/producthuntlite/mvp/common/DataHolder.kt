@@ -23,13 +23,9 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.mvp.view
+package ru.endlesscode.producthuntlite.mvp.common
 
-import com.arellomobile.mvp.MvpView
-import ru.endlesscode.producthuntlite.api.TopicData
-import ru.endlesscode.producthuntlite.mvp.common.DataHolder
+interface DataHolder<in T> {
 
-interface TopicView : MvpView, DataHolder<TopicData> {
-
-    override fun setData(data: TopicData)
+    fun setData(data: T)
 }

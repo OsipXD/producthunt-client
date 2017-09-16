@@ -31,12 +31,12 @@ import ru.endlesscode.producthuntlite.mvp.presenter.TopicsPresenter
 
 class TopicsAdapter(private val presenter: TopicsPresenter) : RecyclerView.Adapter<TopicViewHolder>() {
 
-    override fun getItemCount(): Int = presenter.topicsCount
+    override fun getItemCount(): Int = presenter.count
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = TopicViewHolder(parent)
 
     override fun onBindViewHolder(holder: TopicViewHolder, position: Int) {
-        presenter.onBindTopicAtPosition(position, holder)
+        presenter.onBindItemAtPosition(position, holder)
     }
 }
 

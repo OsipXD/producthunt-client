@@ -52,8 +52,8 @@ class TopicsFragment : MvpAppCompatFragment(), TopicsView {
 
     private val topicsRefresh by lazy { topics_refresh }
     private val topicList by lazy {
-        topic_list.setHasFixedSize(true)
-        topic_list
+        topics_list.setHasFixedSize(true)
+        topics_list
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
@@ -63,13 +63,13 @@ class TopicsFragment : MvpAppCompatFragment(), TopicsView {
         super.onActivityCreated(savedInstanceState)
 
         topicList.init()
-        topicsRefresh.setOnRefreshListener { presenter.refreshPosts() }
+        topicsRefresh.setOnRefreshListener { presenter.refresh() }
     }
 
     private fun RecyclerView.init() {
         this.layoutManager = LinearLayoutManager(this@TopicsFragment.context)
 
-        val dividerItemDecoration = DividerItemDecoration(topic_list.context,
+        val dividerItemDecoration = DividerItemDecoration(topics_list.context,
                 (layoutManager as LinearLayoutManager).orientation)
         this.addItemDecoration(dividerItemDecoration)
 
@@ -78,7 +78,7 @@ class TopicsFragment : MvpAppCompatFragment(), TopicsView {
         }
 
         scrollListener = this.addOnScrollListener {
-            presenter.requestTopics()
+            presenter.requestItems()
         }
     }
 
@@ -95,7 +95,7 @@ class TopicsFragment : MvpAppCompatFragment(), TopicsView {
         topicsRefresh.isRefreshing = false
     }
 
-    override fun openTopic() {
+    override fun openItem() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

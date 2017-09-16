@@ -23,20 +23,8 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.mvp.view
+package ru.endlesscode.producthuntlite.ui.fragment
 
-import com.arellomobile.mvp.MvpView
-import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
-import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
+import com.arellomobile.mvp.MvpAppCompatFragment
 
-@StateStrategyType(AddToEndSingleStrategy::class)
-interface TopicsView : MvpView {
-
-    fun updateView()
-
-    fun onStartRefreshing()
-
-    fun onEndRefreshing()
-
-    fun openTopic()
-}
+class PostsFragment : MvpAppCompatFragment()

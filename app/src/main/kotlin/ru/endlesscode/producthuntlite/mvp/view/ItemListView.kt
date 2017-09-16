@@ -26,10 +26,17 @@
 package ru.endlesscode.producthuntlite.mvp.view
 
 import com.arellomobile.mvp.MvpView
-import ru.endlesscode.producthuntlite.api.TopicData
-import ru.endlesscode.producthuntlite.mvp.common.DataHolder
+import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
+import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 
-interface TopicView : MvpView, DataHolder<TopicData> {
+@StateStrategyType(AddToEndSingleStrategy::class)
+interface TopicsView : MvpView {
 
-    override fun setData(data: TopicData)
+    fun updateView()
+
+    fun onStartRefreshing()
+
+    fun onEndRefreshing()
+
+    fun openItem()
 }

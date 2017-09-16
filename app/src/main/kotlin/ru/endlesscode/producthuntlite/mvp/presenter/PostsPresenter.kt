@@ -29,59 +29,37 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import ru.endlesscode.producthuntlite.api.ProductHunt
 import ru.endlesscode.producthuntlite.api.TopicData
-import ru.endlesscode.producthuntlite.async
+import ru.endlesscode.producthuntlite.doInBackground
+import ru.endlesscode.producthuntlite.mvp.common.ItemList
 import ru.endlesscode.producthuntlite.mvp.view.TopicsView
-import ru.endlesscode.producthuntlite.ui.adapter.TopicViewHolder
 
 @InjectViewState
-class TopicsPresenter : MvpPresenter<TopicsView>() {
+class TopicsPresenter : MvpPresenter<TopicsView>(), ItemList<TopicData> {
 
-    private val topics = mutableListOf<TopicData>()
-    private var isInLoading = false
+    override val items: MutableList<TopicData> = mutableListOf()
+    override var isInLoading = false
 
-    val topicsCount: Int
-        get() = topics.size
-
-    override fun onFirstViewAttach() {
-        this.loadTopics()
-    }
-
-    fun refreshPosts() {
-        loadTopics(append = false)
-    }
-
-    private fun loadTopics(append: Boolean = true) {
+    override fun loadItems(append: Boolean) {
         if (isInLoading) return
         isInLoading = true
 
         viewState.onStartRefreshing()
-        ProductHunt.api.getTopics().async { topics ->
-            addTopics(topics, append)
+        getApiCall().doInBackground { items ->
+            addItems(items, append)
             viewState.updateView()
             viewState.onEndRefreshing()
         }
     }
 
-    fun requestTopics() {
+    override fun requestItems() {
         if (isInLoading) return
         isInLoading = true
 
-        ProductHunt.api.getTopics(before = topics.last().id).async { topics ->
-            addTopics(topics)
+        getApiCall(before = items.last().id).doInBackground { items ->
+            addItems(items)
             viewState.updateView()
         }
     }
 
-    private fun addTopics(topics: List<TopicData>, append: Boolean = true) {
-        if (!append) {
-            this.topics.clear()
-        }
-
-        this.topics.addAll(topics)
-        isInLoading = false
-    }
-
-    fun onBindTopicAtPosition(position: Int, holder: TopicViewHolder) {
-        holder.setData(topics[position])
-    }
+    override fun getApiCall(before: Int?) = ProductHunt.api.getTopics(before)
 }

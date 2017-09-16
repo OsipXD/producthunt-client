@@ -52,7 +52,7 @@ fun RecyclerView.addOnScrollListener(threshold: Int = 5, action: () -> Unit): In
     return listener
 }
 
-fun <T, V : ListWrapper<T>> Call<V>.async(uiAction: (List<T>) -> Unit) = launch(CommonPool) {
+fun <T> Call<out ListWrapper<T>>.doInBackground(uiAction: (List<T>) -> Unit) = launch(CommonPool) {
     val result = awaitResult()
     val items = result.getOrThrow().get()
 
