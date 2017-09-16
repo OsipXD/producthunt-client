@@ -27,7 +27,16 @@ package ru.endlesscode.producthuntlite.api
 
 import com.google.gson.annotations.SerializedName
 
-class TopicsResponse(val topics: List<TopicData>)
+interface ListWrapper<out T> {
+    fun get(): List<T>
+}
+
+class TopicsResponse(val topics: List<TopicData>) : ListWrapper<TopicData> {
+
+    override fun get(): List<TopicData> = topics
+
+    override fun toString(): String = topics.toString()
+}
 
 data class TopicData(
         val id: Int,
@@ -37,7 +46,12 @@ data class TopicData(
         val image: String?
 )
 
-class PostsResponse(val posts: List<PostData>)
+class PostsResponse(val posts: List<PostData>) : ListWrapper<PostData> {
+
+    override fun get(): List<PostData> = posts
+
+    override fun toString(): String = posts.toString()
+}
 
 data class PostData(
         val id: Int,

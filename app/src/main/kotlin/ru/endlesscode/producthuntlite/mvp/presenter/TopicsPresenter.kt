@@ -27,16 +27,11 @@ package ru.endlesscode.producthuntlite.mvp.presenter
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.run
 import ru.endlesscode.producthuntlite.api.ProductHunt
 import ru.endlesscode.producthuntlite.api.TopicData
+import ru.endlesscode.producthuntlite.async
 import ru.endlesscode.producthuntlite.mvp.view.TopicsView
 import ru.endlesscode.producthuntlite.ui.adapter.TopicViewHolder
-import ru.gildor.coroutines.retrofit.awaitResult
-import ru.gildor.coroutines.retrofit.getOrThrow
 
 @InjectViewState
 class TopicsPresenter : MvpPresenter<TopicsView>() {
@@ -52,41 +47,38 @@ class TopicsPresenter : MvpPresenter<TopicsView>() {
     }
 
     fun refreshPosts() {
-        loadTopics(false)
+        loadTopics(append = false)
     }
 
     private fun loadTopics(append: Boolean = true) {
         if (isInLoading) return
         isInLoading = true
+
         viewState.onStartRefreshing()
-
-        launch(CommonPool) {
-            val result = ProductHunt.api.getTopics().awaitResult()
-            val topics = result.getOrThrow().topics
-
-            if (!append) clearTopics()
-            addTopics(topics)
-
-            run(UI) {
-                viewState.updateView()
-                onFinishLoading()
-            }
+        ProductHunt.api.getTopics().async { topics ->
+            addTopics(topics, append)
+            viewState.updateView()
+            viewState.onEndRefreshing()
         }
     }
 
-    private fun clearTopics() {
-        this.topics.clear()
+    fun requestTopics() {
+        if (isInLoading) return
+        isInLoading = true
+
+        ProductHunt.api.getTopics(before = topics.last().id).async { topics ->
+            addTopics(topics)
+            viewState.updateView()
+        }
     }
 
-    private fun addTopics(topics: List<TopicData>) {
+    private fun addTopics(topics: List<TopicData>, append: Boolean = true) {
+        if (!append) {
+            this.topics.clear()
+        }
+
         this.topics.addAll(topics)
-    }
-
-    private fun onFinishLoading() {
-        if (!isInLoading) return
         isInLoading = false
-
-        viewState.onEndRefreshing()
     }
 
     fun onBindTopicAtPosition(position: Int, holder: TopicViewHolder) {

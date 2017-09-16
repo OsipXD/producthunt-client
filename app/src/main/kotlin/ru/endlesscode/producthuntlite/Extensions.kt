@@ -25,15 +25,41 @@
 
 package ru.endlesscode.producthuntlite
 
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
+import retrofit2.Call
+import ru.endlesscode.producthuntlite.api.ListWrapper
+import ru.endlesscode.producthuntlite.ui.common.InfiniteScrollListener
+import ru.gildor.coroutines.retrofit.awaitResult
+import ru.gildor.coroutines.retrofit.getOrThrow
 
 @Suppress("UNCHECKED_CAST")
 fun <T : View> ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false)
         = LayoutInflater.from(this.context).inflate(layoutId, this, attachToRoot) as T
+
+fun RecyclerView.addOnScrollListener(threshold: Int = 5, action: () -> Unit): InfiniteScrollListener {
+    val listener = InfiniteScrollListener(layoutManager as LinearLayoutManager, threshold, action)
+    this.addOnScrollListener(listener)
+
+    return listener
+}
+
+fun <T, V : ListWrapper<T>> Call<V>.async(uiAction: (List<T>) -> Unit) = launch(CommonPool) {
+    val result = awaitResult()
+    val items = result.getOrThrow().get()
+
+    kotlinx.coroutines.experimental.run(UI) {
+        uiAction(items)
+    }
+}
 
 fun ImageView.load(url: String?) {
     if (url == null || url.isEmpty()) {

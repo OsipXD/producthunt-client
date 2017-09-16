@@ -43,7 +43,7 @@ class ProductHuntApiTest {
 
     @Test
     fun getFeed_mustReturnPosts() = runBlocking {
-        val result = ProductHunt.api.getTopicFeed("tech").awaitResult()
+        val result = ProductHunt.api.getTopicFeed(topic = 1).awaitResult()
         val posts = result.getOrThrow().posts
 
         assertTrue(posts.isNotEmpty())

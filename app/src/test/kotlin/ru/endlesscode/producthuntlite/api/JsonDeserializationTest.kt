@@ -42,11 +42,11 @@ class JsonDeserializationTest(private val jsonName: String, private val expected
             val topic = TopicData(id = 1, slug = "tech", name = "Tech", description = "", image = null)
             val post = PostData(
                     id = 1,
-                    name = "Awesome Idea #17",
-                    day = "2017-07-13",
-                    thumbnail = ThumbnailData(1, "https://ph-files.imgix.net/81511bc5-e803-4220-bd93-c88dbdcabd50?auto=format&fit=crop&h=570&w=430"),
+                    name = "Awesome Idea #27",
+                    day = "2017-09-14",
+                    thumbnail = ThumbnailData(1, "https://ph-files.imgix.net/d4087afd-07fa-4037-9219-a83acddf2fe2?auto=format&fit=crop&h=570&w=430"),
                     desc = "Great new search engine",
-                    categoryId = 2,
+                    categoryId = 0,
                     votesCount = 0,
                     screenshotUrl = ScreenshotUrl(
                             px300 = "http://placehold.it/850x850.png",

@@ -34,32 +34,30 @@ import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
-import kotlinx.android.synthetic.main.topic_fragment.*
+import kotlinx.android.synthetic.main.topics_fragment.*
 import ru.endlesscode.producthuntlite.R
+import ru.endlesscode.producthuntlite.addOnScrollListener
 import ru.endlesscode.producthuntlite.inflate
 import ru.endlesscode.producthuntlite.mvp.presenter.TopicsPresenter
 import ru.endlesscode.producthuntlite.mvp.view.TopicsView
 import ru.endlesscode.producthuntlite.ui.adapter.TopicsAdapter
+import ru.endlesscode.producthuntlite.ui.common.InfiniteScrollListener
 
 class TopicsFragment : MvpAppCompatFragment(), TopicsView {
 
     @InjectPresenter
     lateinit var presenter: TopicsPresenter
 
+    private lateinit var scrollListener: InfiniteScrollListener
+
     private val topicsRefresh by lazy { topics_refresh }
     private val topicList by lazy {
         topic_list.setHasFixedSize(true)
-
-        val layoutManager = LinearLayoutManager(this.activity)
-        topic_list.layoutManager = layoutManager
-
-        val dividerItemDecoration = DividerItemDecoration(topic_list.context, layoutManager.orientation)
-        topic_list.addItemDecoration(dividerItemDecoration)
         topic_list
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            container?.inflate(R.layout.topic_fragment)
+            container?.inflate(R.layout.topics_fragment)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -69,13 +67,24 @@ class TopicsFragment : MvpAppCompatFragment(), TopicsView {
     }
 
     private fun RecyclerView.init() {
+        this.layoutManager = LinearLayoutManager(this@TopicsFragment.context)
+
+        val dividerItemDecoration = DividerItemDecoration(topic_list.context,
+                (layoutManager as LinearLayoutManager).orientation)
+        this.addItemDecoration(dividerItemDecoration)
+
         if (adapter == null) {
             adapter = TopicsAdapter(presenter)
+        }
+
+        scrollListener = this.addOnScrollListener {
+            presenter.requestTopics()
         }
     }
 
     override fun updateView() {
         topicList.adapter.notifyDataSetChanged()
+        scrollListener.onUpdate()
     }
 
     override fun onStartRefreshing() {
@@ -87,6 +96,6 @@ class TopicsFragment : MvpAppCompatFragment(), TopicsView {
     }
 
     override fun openTopic() {
-
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
