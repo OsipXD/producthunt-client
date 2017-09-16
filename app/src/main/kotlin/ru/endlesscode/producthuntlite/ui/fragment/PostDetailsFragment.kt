@@ -25,6 +25,8 @@
 
 package ru.endlesscode.producthuntlite.ui.fragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -39,6 +41,7 @@ import ru.endlesscode.producthuntlite.inflate
 import ru.endlesscode.producthuntlite.load
 import ru.endlesscode.producthuntlite.mvp.presenter.PostDetailsPresenter
 import ru.endlesscode.producthuntlite.mvp.view.PostDetailsView
+
 
 class PostDetailsFragment : MvpAppCompatFragment(), PostDetailsView {
 
@@ -79,5 +82,10 @@ class PostDetailsFragment : MvpAppCompatFragment(), PostDetailsView {
         title.text = post.name
         desc.text = post.desc
         screenshot.load(post.screenshotUrl.px300)
+    }
+
+    override fun openLink(link: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+        context.startActivity(intent)
     }
 }

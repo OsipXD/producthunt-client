@@ -60,6 +60,7 @@ data class PostData(
         override val name: String,
         val day: String,
         val thumbnail: ThumbnailData,
+        @SerializedName("redirect_url") val redirectUrl: String,
         @SerializedName("screenshot_url") val screenshotUrl: ScreenshotUrl,
         @SerializedName("tagline") val desc: String,
         @SerializedName("category_id") val categoryId: Int,

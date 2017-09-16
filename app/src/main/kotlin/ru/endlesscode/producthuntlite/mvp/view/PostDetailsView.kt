@@ -34,4 +34,6 @@ import ru.endlesscode.producthuntlite.api.PostData
 interface PostDetailsView : MvpView {
 
     fun showPost(post: PostData)
+
+    fun openLink(link: String)
 }

@@ -30,6 +30,7 @@ import com.arellomobile.mvp.MvpPresenter
 import ru.endlesscode.producthuntlite.api.PostData
 import ru.endlesscode.producthuntlite.mvp.view.PostDetailsView
 
+
 @InjectViewState
 class PostDetailsPresenter(private val post: PostData) : MvpPresenter<PostDetailsView>() {
 
@@ -42,6 +43,6 @@ class PostDetailsPresenter(private val post: PostData) : MvpPresenter<PostDetail
     }
 
     fun linkFabClicked() {
-
+        viewState.openLink(post.redirectUrl)
     }
 }
