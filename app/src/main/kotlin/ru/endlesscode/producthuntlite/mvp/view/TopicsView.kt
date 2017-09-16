@@ -34,9 +34,9 @@ interface TopicsView : MvpView {
 
     fun updateView()
 
-    fun onStartLoading()
+    fun onStartRefreshing()
 
-    fun onEndLoading()
+    fun onEndRefreshing()
 
     fun openTopic()
 }

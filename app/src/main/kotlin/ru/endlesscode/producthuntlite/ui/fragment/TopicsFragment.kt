@@ -46,6 +46,7 @@ class TopicsFragment : MvpAppCompatFragment(), TopicsView {
     @InjectPresenter
     lateinit var presenter: TopicsPresenter
 
+    private val topicsRefresh by lazy { topics_refresh }
     private val topicList by lazy {
         topic_list.setHasFixedSize(true)
 
@@ -64,6 +65,7 @@ class TopicsFragment : MvpAppCompatFragment(), TopicsView {
         super.onActivityCreated(savedInstanceState)
 
         topicList.init()
+        topicsRefresh.setOnRefreshListener { presenter.refreshPosts() }
     }
 
     private fun RecyclerView.init() {
@@ -76,11 +78,12 @@ class TopicsFragment : MvpAppCompatFragment(), TopicsView {
         topicList.adapter.notifyDataSetChanged()
     }
 
-    override fun onStartLoading() {
-
+    override fun onStartRefreshing() {
+        topicsRefresh.isRefreshing = true
     }
 
-    override fun onEndLoading() {
+    override fun onEndRefreshing() {
+        topicsRefresh.isRefreshing = false
     }
 
     override fun openTopic() {

@@ -51,23 +51,31 @@ class TopicsPresenter : MvpPresenter<TopicsView>() {
         this.loadTopics()
     }
 
-    private fun loadTopics() {
+    fun refreshPosts() {
+        loadTopics(false)
+    }
+
+    private fun loadTopics(append: Boolean = true) {
         if (isInLoading) return
         isInLoading = true
-
-        viewState.onStartLoading()
+        viewState.onStartRefreshing()
 
         launch(CommonPool) {
             val result = ProductHunt.api.getTopics().awaitResult()
             val topics = result.getOrThrow().topics
+
+            if (!append) clearTopics()
             addTopics(topics)
 
             run(UI) {
                 viewState.updateView()
+                onFinishLoading()
             }
-
-            onFinishLoading()
         }
+    }
+
+    private fun clearTopics() {
+        this.topics.clear()
     }
 
     private fun addTopics(topics: List<TopicData>) {
@@ -78,7 +86,7 @@ class TopicsPresenter : MvpPresenter<TopicsView>() {
         if (!isInLoading) return
         isInLoading = false
 
-        viewState.onEndLoading()
+        viewState.onEndRefreshing()
     }
 
     fun onBindTopicAtPosition(position: Int, holder: TopicViewHolder) {
