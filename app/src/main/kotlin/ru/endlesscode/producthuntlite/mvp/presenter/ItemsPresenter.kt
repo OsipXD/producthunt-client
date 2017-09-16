@@ -36,6 +36,10 @@ abstract class ItemsPresenter<TItem : Item> : MvpPresenter<ItemsView>(), ItemLis
     override val items: MutableList<TItem> = mutableListOf()
     override var isInLoading = false
 
+    override fun onFirstViewAttach() {
+        loadItems()
+    }
+
     override fun loadItems(append: Boolean) {
         if (isInLoading) return
         isInLoading = true

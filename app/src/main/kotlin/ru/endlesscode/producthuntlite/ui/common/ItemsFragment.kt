@@ -23,9 +23,10 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.ui.fragment
+package ru.endlesscode.producthuntlite.ui.common
 
 import android.os.Bundle
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -33,49 +34,41 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.MvpAppCompatFragment
-import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.topics_fragment.*
-import ru.endlesscode.producthuntlite.R
 import ru.endlesscode.producthuntlite.addOnScrollListener
 import ru.endlesscode.producthuntlite.inflate
 import ru.endlesscode.producthuntlite.mvp.common.Item
-import ru.endlesscode.producthuntlite.mvp.presenter.TopicsPresenter
+import ru.endlesscode.producthuntlite.mvp.presenter.ItemsPresenter
 import ru.endlesscode.producthuntlite.mvp.view.ItemsView
-import ru.endlesscode.producthuntlite.ui.adapter.TopicsAdapter
-import ru.endlesscode.producthuntlite.ui.common.InfiniteScrollListener
 
-class ItemsFragment : MvpAppCompatFragment(), ItemsView {
 
-    @InjectPresenter
-    lateinit var presenter: TopicsPresenter
+abstract class ItemsFragment<TPresenter : ItemsPresenter<out Item>> : MvpAppCompatFragment(), ItemsView {
+
+    abstract var presenter: TPresenter
 
     private lateinit var scrollListener: InfiniteScrollListener
-
-    private val topicsRefresh by lazy { topics_refresh }
-    private val topicList by lazy {
-        topics_list.setHasFixedSize(true)
-        topics_list
-    }
+    protected abstract val layoutId: Int
+    protected abstract val itemsRefresh: SwipeRefreshLayout
+    protected abstract val itemsList: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            container?.inflate(R.layout.topics_fragment)
+            container?.inflate(layoutId)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        topicList.init()
-        topicsRefresh.setOnRefreshListener { presenter.refresh() }
+        itemsList.init()
+        itemsRefresh.setOnRefreshListener { presenter.refresh() }
     }
 
     private fun RecyclerView.init() {
         this.layoutManager = LinearLayoutManager(this@ItemsFragment.context)
 
-        val dividerItemDecoration = DividerItemDecoration(topics_list.context,
-                (layoutManager as LinearLayoutManager).orientation)
-        this.addItemDecoration(dividerItemDecoration)
+        val divider = DividerItemDecoration(topics_list.context, (layoutManager as LinearLayoutManager).orientation)
+        this.addItemDecoration(divider)
 
         if (adapter == null) {
-            adapter = TopicsAdapter(presenter)
+            adapter = createAdapter()
         }
 
         scrollListener = this.addOnScrollListener {
@@ -83,20 +76,18 @@ class ItemsFragment : MvpAppCompatFragment(), ItemsView {
         }
     }
 
+    abstract fun createAdapter(): RecyclerView.Adapter<*>?
+
     override fun updateView() {
-        topicList.adapter.notifyDataSetChanged()
+        itemsList.adapter.notifyDataSetChanged()
         scrollListener.onUpdate()
     }
 
     override fun onStartRefreshing() {
-        topicsRefresh.isRefreshing = true
+        itemsRefresh.isRefreshing = true
     }
 
     override fun onEndRefreshing() {
-        topicsRefresh.isRefreshing = false
-    }
-
-    override fun openItem(item: Item) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        itemsRefresh.isRefreshing = false
     }
 }

@@ -23,15 +23,32 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.ui.adapter
+package ru.endlesscode.producthuntlite.ui.fragment
 
-import android.view.ViewGroup
-import ru.endlesscode.producthuntlite.api.TopicData
+import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.widget.RecyclerView
+import com.arellomobile.mvp.presenter.InjectPresenter
+import kotlinx.android.synthetic.main.topics_fragment.*
+import ru.endlesscode.producthuntlite.R
+import ru.endlesscode.producthuntlite.mvp.common.Item
 import ru.endlesscode.producthuntlite.mvp.presenter.TopicsPresenter
-import ru.endlesscode.producthuntlite.ui.common.ItemsAdapter
+import ru.endlesscode.producthuntlite.ui.adapter.TopicsAdapter
+import ru.endlesscode.producthuntlite.ui.common.ItemsFragment
 
-class TopicsAdapter(presenter: TopicsPresenter) : ItemsAdapter<TopicData, TopicViewHolder>(presenter) {
+class TopicsFragment : ItemsFragment<TopicsPresenter>() {
+    override val layoutId = R.layout.topics_fragment
+    override val itemsRefresh: SwipeRefreshLayout by lazy { topics_refresh }
+    override val itemsList: RecyclerView by lazy {
+        topics_list.setHasFixedSize(true)
+        topics_list
+    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = TopicViewHolder(parent)
+    @InjectPresenter
+    override lateinit var presenter: TopicsPresenter
+
+    override fun createAdapter() = TopicsAdapter(presenter)
+
+    override fun openItem(item: Item) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }
-
