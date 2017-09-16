@@ -28,7 +28,6 @@ package ru.endlesscode.producthuntlite.ui.adapter
 import android.view.ViewGroup
 import ru.endlesscode.producthuntlite.api.TopicData
 import ru.endlesscode.producthuntlite.mvp.presenter.TopicsPresenter
-import ru.endlesscode.producthuntlite.ui.common.ItemsAdapter
 
 class TopicsAdapter(presenter: TopicsPresenter) : ItemsAdapter<TopicData, TopicViewHolder>(presenter) {
 

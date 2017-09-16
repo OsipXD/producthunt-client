@@ -30,7 +30,11 @@ import ru.endlesscode.producthuntlite.api.PostData
 import ru.endlesscode.producthuntlite.api.ProductHunt
 
 @InjectViewState
-class PostsPresenter(val topicId: Int) : ItemsPresenter<PostData>() {
+class PostsPresenter(private val topicId: Int) : ItemsPresenter<PostData>() {
+
+    companion object {
+        val TOPIC_ID = "topicId"
+    }
 
     override fun getApiCall(before: Int?) = ProductHunt.api.getTopicFeed(topicId, before)
 }

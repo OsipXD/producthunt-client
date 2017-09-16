@@ -28,25 +28,29 @@ package ru.endlesscode.producthuntlite.ui.fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
-import kotlinx.android.synthetic.main.topics_fragment.*
+import com.arellomobile.mvp.presenter.ProvidePresenter
+import kotlinx.android.synthetic.main.posts_fragment.*
 import ru.endlesscode.producthuntlite.R
 import ru.endlesscode.producthuntlite.mvp.common.Item
-import ru.endlesscode.producthuntlite.mvp.presenter.TopicsPresenter
-import ru.endlesscode.producthuntlite.ui.adapter.TopicsAdapter
+import ru.endlesscode.producthuntlite.mvp.presenter.PostsPresenter
+import ru.endlesscode.producthuntlite.ui.adapter.PostsAdapter
 
-class TopicsFragment : ItemsFragment<TopicsPresenter>() {
+class PostsFragment : ItemsFragment<PostsPresenter>() {
 
     @InjectPresenter
-    override lateinit var presenter: TopicsPresenter
+    override lateinit var presenter: PostsPresenter
 
-    override val layoutId = R.layout.topics_fragment
-    override val itemsRefresh: SwipeRefreshLayout by lazy { topics_refresh }
+    override val layoutId = R.layout.posts_fragment
+    override val itemsRefresh: SwipeRefreshLayout by lazy { posts_refresh }
     override val itemsList: RecyclerView by lazy {
-        topics_list.setHasFixedSize(true)
-        topics_list
+        posts_list.setHasFixedSize(true)
+        posts_list
     }
 
-    override fun createAdapter() = TopicsAdapter(presenter)
+    @ProvidePresenter
+    fun providePresenter() = PostsPresenter(1)
+
+    override fun createAdapter() = PostsAdapter(presenter)
 
     override fun openItem(item: Item) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

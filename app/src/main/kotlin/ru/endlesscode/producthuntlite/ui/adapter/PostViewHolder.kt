@@ -32,15 +32,16 @@ import kotlinx.android.synthetic.main.post_item.view.*
 import ru.endlesscode.producthuntlite.R
 import ru.endlesscode.producthuntlite.api.PostData
 import ru.endlesscode.producthuntlite.load
+import ru.endlesscode.producthuntlite.mvp.view.PostView
 import ru.endlesscode.producthuntlite.ui.common.ViewTypeHolder
 
-class PostViewHolder(parent: ViewGroup) : ViewTypeHolder(parent, R.layout.post_item) {
+class PostViewHolder(parent: ViewGroup) : ViewTypeHolder(parent, R.layout.post_item), PostView {
     private var title: TextView = itemView.post_title
     private var desc: TextView = itemView.post_desc
     private var votes: TextView = itemView.post_votes
     private var thumbnail: ImageView = itemView.post_thumbnail
 
-    fun bind(data: PostData) {
+    override fun setData(data: PostData) {
         title.text = data.name
         desc.text = data.desc
         votes.text = data.votesCount.toString()

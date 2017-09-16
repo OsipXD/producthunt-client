@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.ui.common
+package ru.endlesscode.producthuntlite.ui.fragment
 
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
@@ -34,12 +34,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.MvpAppCompatFragment
-import kotlinx.android.synthetic.main.topics_fragment.*
 import ru.endlesscode.producthuntlite.addOnScrollListener
 import ru.endlesscode.producthuntlite.inflate
 import ru.endlesscode.producthuntlite.mvp.common.Item
 import ru.endlesscode.producthuntlite.mvp.presenter.ItemsPresenter
 import ru.endlesscode.producthuntlite.mvp.view.ItemsView
+import ru.endlesscode.producthuntlite.ui.common.InfiniteScrollListener
 
 
 abstract class ItemsFragment<TPresenter : ItemsPresenter<out Item>> : MvpAppCompatFragment(), ItemsView {
@@ -64,7 +64,7 @@ abstract class ItemsFragment<TPresenter : ItemsPresenter<out Item>> : MvpAppComp
     private fun RecyclerView.init() {
         this.layoutManager = LinearLayoutManager(this@ItemsFragment.context)
 
-        val divider = DividerItemDecoration(topics_list.context, (layoutManager as LinearLayoutManager).orientation)
+        val divider = DividerItemDecoration(itemsList.context, (layoutManager as LinearLayoutManager).orientation)
         this.addItemDecoration(divider)
 
         if (adapter == null) {
