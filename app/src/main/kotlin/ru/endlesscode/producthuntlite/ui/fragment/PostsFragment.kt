@@ -28,6 +28,7 @@ package ru.endlesscode.producthuntlite.ui.fragment
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.Toolbar
+import android.view.View
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import kotlinx.android.synthetic.main.posts_fragment.*
@@ -59,6 +60,12 @@ class PostsFragment : ItemsFragment<PostsPresenter>() {
     override val itemsListId: Int by lazy { R.id.posts_list }
 
     override val title by lazy { "Topic: ${arguments.getString(PostsPresenter.TOPIC_NAME)}" }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        itemsList.addDivider()
+    }
 
     @ProvidePresenter
     fun providePresenter() = PostsPresenter(

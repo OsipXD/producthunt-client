@@ -52,9 +52,9 @@ abstract class ItemsFragment<TPresenter : ItemsPresenter<out Item>> : MvpAppComp
     protected abstract val itemsRefresh: SwipeRefreshLayout
     protected abstract val toolbar: Toolbar
     protected abstract val itemsListId: Int
-    abstract val title: String
+    protected lateinit var itemsList: RecyclerView
 
-    private lateinit var itemsList: RecyclerView
+    abstract val title: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = container?.inflate(layoutId) ?: return null
@@ -75,9 +75,6 @@ abstract class ItemsFragment<TPresenter : ItemsPresenter<out Item>> : MvpAppComp
         this.setHasFixedSize(true)
         this.layoutManager = LinearLayoutManager(this@ItemsFragment.context)
 
-        val divider = DividerItemDecoration(itemsList.context, (layoutManager as LinearLayoutManager).orientation)
-        this.addItemDecoration(divider)
-
         if (adapter == null) {
             adapter = createAdapter()
         }
@@ -85,6 +82,11 @@ abstract class ItemsFragment<TPresenter : ItemsPresenter<out Item>> : MvpAppComp
         scrollListener = this.addOnScrollListener {
             presenter.requestItems()
         }
+    }
+
+    protected fun RecyclerView.addDivider() {
+        val divider = DividerItemDecoration(itemsList.context, (layoutManager as LinearLayoutManager).orientation)
+        this.addItemDecoration(divider)
     }
 
     abstract fun createAdapter(): RecyclerView.Adapter<*>?
