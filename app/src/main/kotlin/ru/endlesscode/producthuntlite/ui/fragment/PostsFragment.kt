@@ -27,6 +27,7 @@ package ru.endlesscode.producthuntlite.ui.fragment
 
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.widget.Toolbar
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import kotlinx.android.synthetic.main.posts_fragment.*
@@ -52,11 +53,12 @@ class PostsFragment : ItemsFragment<PostsPresenter>() {
     @InjectPresenter
     override lateinit var presenter: PostsPresenter
 
-    override val title by lazy { "Topic: ${arguments.getString(PostsPresenter.TOPIC_NAME)}" }
-
     override val layoutId = R.layout.posts_fragment
     override val itemsRefresh: SwipeRefreshLayout by lazy { posts_refresh }
+    override val toolbar: Toolbar by lazy { posts_toolbar }
     override val itemsListId: Int by lazy { R.id.posts_list }
+
+    override val title by lazy { "Topic: ${arguments.getString(PostsPresenter.TOPIC_NAME)}" }
 
     @ProvidePresenter
     fun providePresenter() = PostsPresenter(

@@ -27,15 +27,12 @@ package ru.endlesscode.producthuntlite.ui.activity
 
 import android.os.Bundle
 import com.arellomobile.mvp.MvpAppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
 import ru.endlesscode.producthuntlite.R
 import ru.endlesscode.producthuntlite.commit
 import ru.endlesscode.producthuntlite.ui.fragment.ItemsFragment
 import ru.endlesscode.producthuntlite.ui.fragment.TopicsFragment
 
 class MainActivity : MvpAppCompatActivity() {
-
-    private val toolbar by lazy { custom_toolbar }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

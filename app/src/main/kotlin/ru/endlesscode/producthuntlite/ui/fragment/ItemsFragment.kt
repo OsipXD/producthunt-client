@@ -30,6 +30,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,6 +50,7 @@ abstract class ItemsFragment<TPresenter : ItemsPresenter<out Item>> : MvpAppComp
     private lateinit var scrollListener: InfiniteScrollListener
     protected abstract val layoutId: Int
     protected abstract val itemsRefresh: SwipeRefreshLayout
+    protected abstract val toolbar: Toolbar
     protected abstract val itemsListId: Int
     abstract val title: String
 
@@ -66,6 +68,7 @@ abstract class ItemsFragment<TPresenter : ItemsPresenter<out Item>> : MvpAppComp
         super.onActivityCreated(savedInstanceState)
 
         itemsRefresh.setOnRefreshListener { presenter.refresh() }
+        toolbar.title = title
     }
 
     private fun RecyclerView.init() {
