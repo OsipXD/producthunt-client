@@ -26,10 +26,10 @@
 package ru.endlesscode.producthuntlite.ui.activity
 
 import android.os.Bundle
-import android.support.v4.app.FragmentManager
 import com.arellomobile.mvp.MvpAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.endlesscode.producthuntlite.R
+import ru.endlesscode.producthuntlite.commit
 import ru.endlesscode.producthuntlite.ui.fragment.ItemsFragment
 import ru.endlesscode.producthuntlite.ui.fragment.TopicsFragment
 
@@ -46,22 +46,9 @@ class MainActivity : MvpAppCompatActivity() {
         }
     }
 
-    fun changeFragment(newFragment: ItemsFragment<*>, cleanStack: Boolean = false) {
-        val transaction = supportFragmentManager.beginTransaction()
-        if (cleanStack) clearBackStack()
-
-        toolbar.title = newFragment.title
-
-        transaction.replace(R.id.activity_content, newFragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
-
-    private fun clearBackStack() {
-        val manager = supportFragmentManager
-        if (manager.backStackEntryCount > 0) {
-            val first = manager.getBackStackEntryAt(0)
-            manager.popBackStack(first.id, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+    fun changeFragment(newFragment: ItemsFragment<*>) {
+        supportFragmentManager.commit {
+            add(R.id.activity_content, newFragment)
         }
     }
 

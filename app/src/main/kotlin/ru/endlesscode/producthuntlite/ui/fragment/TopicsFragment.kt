@@ -26,7 +26,6 @@
 package ru.endlesscode.producthuntlite.ui.fragment
 
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.topics_fragment.*
 import ru.endlesscode.producthuntlite.R
@@ -43,10 +42,7 @@ class TopicsFragment : ItemsFragment<TopicsPresenter>() {
 
     override val layoutId = R.layout.topics_fragment
     override val itemsRefresh: SwipeRefreshLayout by lazy { topics_refresh }
-    override val itemsList: RecyclerView by lazy {
-        topics_list.setHasFixedSize(true)
-        topics_list
-    }
+    override val itemsListId: Int by lazy { R.id.topics_list }
 
     override fun createAdapter() = TopicsAdapter(presenter)
 

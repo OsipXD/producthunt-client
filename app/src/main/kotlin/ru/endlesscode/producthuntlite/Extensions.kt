@@ -25,6 +25,8 @@
 
 package ru.endlesscode.producthuntlite
 
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -67,4 +69,11 @@ fun ImageView.load(url: String?) {
     } else {
         Picasso.with(context).load(url).into(this)
     }
+}
+
+fun FragmentManager.commit(action: FragmentTransaction.() -> FragmentTransaction) {
+    this.beginTransaction()
+            .action()
+            .addToBackStack(null)
+            .commit()
 }

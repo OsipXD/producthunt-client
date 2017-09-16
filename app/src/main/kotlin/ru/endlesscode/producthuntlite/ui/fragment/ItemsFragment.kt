@@ -49,20 +49,27 @@ abstract class ItemsFragment<TPresenter : ItemsPresenter<out Item>> : MvpAppComp
     private lateinit var scrollListener: InfiniteScrollListener
     protected abstract val layoutId: Int
     protected abstract val itemsRefresh: SwipeRefreshLayout
-    protected abstract val itemsList: RecyclerView
+    protected abstract val itemsListId: Int
     abstract val title: String
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            container?.inflate(layoutId)
+    private lateinit var itemsList: RecyclerView
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view: View = container?.inflate(layoutId) ?: return null
+        itemsList = view.findViewById(itemsListId)
+        itemsList.init()
+
+        return view
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        itemsList.init()
         itemsRefresh.setOnRefreshListener { presenter.refresh() }
     }
 
     private fun RecyclerView.init() {
+        this.setHasFixedSize(true)
         this.layoutManager = LinearLayoutManager(this@ItemsFragment.context)
 
         val divider = DividerItemDecoration(itemsList.context, (layoutManager as LinearLayoutManager).orientation)
