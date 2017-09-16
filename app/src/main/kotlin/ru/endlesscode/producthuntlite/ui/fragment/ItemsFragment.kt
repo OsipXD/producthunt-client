@@ -50,6 +50,7 @@ abstract class ItemsFragment<TPresenter : ItemsPresenter<out Item>> : MvpAppComp
     protected abstract val layoutId: Int
     protected abstract val itemsRefresh: SwipeRefreshLayout
     protected abstract val itemsList: RecyclerView
+    abstract val title: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             container?.inflate(layoutId)

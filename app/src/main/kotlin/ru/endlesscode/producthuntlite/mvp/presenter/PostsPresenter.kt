@@ -34,6 +34,7 @@ class PostsPresenter(private val topicId: Int) : ItemsPresenter<PostData>() {
 
     companion object {
         val TOPIC_ID = "topicId"
+        val TOPIC_NAME = "topicName"
     }
 
     override fun getApiCall(before: Int?) = ProductHunt.api.getTopicFeed(topicId, before)

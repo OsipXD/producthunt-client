@@ -41,8 +41,8 @@ class TopicsResponse(val topics: List<TopicData>) : ListWrapper<TopicData> {
 
 data class TopicData(
         override val id: Int,
+        override val name: String,
         val slug: String,
-        val name: String,
         val description: String,
         val image: String?
 ) : Item
@@ -56,7 +56,7 @@ class PostsResponse(val posts: List<PostData>) : ListWrapper<PostData> {
 
 data class PostData(
         override val id: Int,
-        val name: String,
+        override val name: String,
         val day: String,
         val thumbnail: ThumbnailData,
         @SerializedName("screenshot_url") val screenshotUrl: ScreenshotUrl,

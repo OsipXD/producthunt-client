@@ -27,4 +27,5 @@ package ru.endlesscode.producthuntlite.mvp.common
 
 interface Item {
     val id: Int
+    val name: String
 }

@@ -35,13 +35,13 @@ import ru.endlesscode.producthuntlite.R
 import ru.endlesscode.producthuntlite.mvp.common.Item
 import ru.endlesscode.producthuntlite.mvp.presenter.PostsPresenter
 import ru.endlesscode.producthuntlite.ui.adapter.PostsAdapter
-
 class PostsFragment : ItemsFragment<PostsPresenter>() {
 
     companion object {
-        fun instance(topicId: Int): PostsFragment {
+        fun instance(topic: Item): PostsFragment {
             val args = Bundle()
-            args.putInt(PostsPresenter.TOPIC_ID, topicId)
+            args.putInt(PostsPresenter.TOPIC_ID, topic.id)
+            args.putString(PostsPresenter.TOPIC_NAME, topic.name)
 
             val fragment = PostsFragment()
             fragment.arguments = args
@@ -51,6 +51,8 @@ class PostsFragment : ItemsFragment<PostsPresenter>() {
 
     @InjectPresenter
     override lateinit var presenter: PostsPresenter
+
+    override val title by lazy { "Topic: ${arguments.getString(PostsPresenter.TOPIC_NAME)}" }
 
     override val layoutId = R.layout.posts_fragment
     override val itemsRefresh: SwipeRefreshLayout by lazy { posts_refresh }
@@ -70,3 +72,4 @@ class PostsFragment : ItemsFragment<PostsPresenter>() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
+

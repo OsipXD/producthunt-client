@@ -36,9 +36,10 @@ import ru.endlesscode.producthuntlite.ui.activity.MainActivity
 import ru.endlesscode.producthuntlite.ui.adapter.TopicsAdapter
 
 class TopicsFragment : ItemsFragment<TopicsPresenter>() {
-
     @InjectPresenter
     override lateinit var presenter: TopicsPresenter
+
+    override val title = "Topics"
 
     override val layoutId = R.layout.topics_fragment
     override val itemsRefresh: SwipeRefreshLayout by lazy { topics_refresh }
@@ -51,6 +52,6 @@ class TopicsFragment : ItemsFragment<TopicsPresenter>() {
 
     override fun openItem(item: Item) {
         val activity = activity as MainActivity
-        activity.changeFragment(PostsFragment.instance(item.id))
+        activity.changeFragment(PostsFragment.instance(item))
     }
 }

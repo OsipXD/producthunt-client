@@ -14,7 +14,8 @@
             android:layout_alignParentTop="true"
             android:layout_marginEnd="15dp"
             android:contentDescription="@string/thumbnail_desc"
-            android:background="#ddd"/>
+            android:scaleType="centerCrop"
+            tools:background="#ddd"/>
 
     <TextView
             tools:text="My awesome product!"
