@@ -25,7 +25,9 @@
 
 package ru.endlesscode.producthuntlite.mvp.common
 
-interface Item {
+import java.io.Serializable
+
+interface Item : Serializable {
     val id: Int
     val name: String
 }

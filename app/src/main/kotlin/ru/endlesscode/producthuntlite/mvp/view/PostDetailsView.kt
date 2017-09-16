@@ -23,38 +23,15 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.ui.activity
+package ru.endlesscode.producthuntlite.mvp.view
 
-import android.os.Bundle
-import android.support.v4.app.Fragment
-import com.arellomobile.mvp.MvpAppCompatActivity
-import ru.endlesscode.producthuntlite.R
-import ru.endlesscode.producthuntlite.commit
-import ru.endlesscode.producthuntlite.ui.fragment.TopicsFragment
+import com.arellomobile.mvp.MvpView
+import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
+import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
+import ru.endlesscode.producthuntlite.api.PostData
 
-class MainActivity : MvpAppCompatActivity() {
+@StateStrategyType(AddToEndSingleStrategy::class)
+interface PostDetailsView : MvpView {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        if (savedInstanceState == null) {
-            this.changeFragment(TopicsFragment())
-        }
-    }
-
-    fun changeFragment(newFragment: Fragment) {
-        supportFragmentManager.commit {
-            add(R.id.activity_content, newFragment)
-        }
-    }
-
-    override fun onBackPressed() {
-        val fragmentManager = supportFragmentManager
-        if (fragmentManager.backStackEntryCount > 1) {
-            fragmentManager.popBackStack()
-        } else {
-            finish()
-        }
-    }
+    fun showPost(post: PostData)
 }

@@ -27,6 +27,7 @@ package ru.endlesscode.producthuntlite.api
 
 import com.google.gson.annotations.SerializedName
 import ru.endlesscode.producthuntlite.mvp.common.Item
+import java.io.Serializable
 
 interface ListWrapper<out T> {
     fun get(): List<T>
@@ -45,7 +46,7 @@ data class TopicData(
         val slug: String,
         val description: String,
         val image: String?
-) : Item
+) : Item, Serializable
 
 class PostsResponse(val posts: List<PostData>) : ListWrapper<PostData> {
 
@@ -63,7 +64,7 @@ data class PostData(
         @SerializedName("tagline") val desc: String,
         @SerializedName("category_id") val categoryId: Int,
         @SerializedName("votes_count") val votesCount: Int
-) : Item {
+) : Item, Serializable {
     val thumbnailUrl: String
         get() = thumbnail.imageUrl
 }
@@ -71,9 +72,9 @@ data class PostData(
 data class ScreenshotUrl(
         @SerializedName("300px") val px300: String,
         @SerializedName("850px") val px850: String
-)
+) : Serializable
 
 data class ThumbnailData(
         val id: Int,
         @SerializedName("image_url") val imageUrl: String
-)
+) : Serializable

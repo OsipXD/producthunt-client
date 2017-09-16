@@ -23,38 +23,25 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.ui.activity
+package ru.endlesscode.producthuntlite.mvp.presenter
 
-import android.os.Bundle
-import android.support.v4.app.Fragment
-import com.arellomobile.mvp.MvpAppCompatActivity
-import ru.endlesscode.producthuntlite.R
-import ru.endlesscode.producthuntlite.commit
-import ru.endlesscode.producthuntlite.ui.fragment.TopicsFragment
+import com.arellomobile.mvp.InjectViewState
+import com.arellomobile.mvp.MvpPresenter
+import ru.endlesscode.producthuntlite.api.PostData
+import ru.endlesscode.producthuntlite.mvp.view.PostDetailsView
 
-class MainActivity : MvpAppCompatActivity() {
+@InjectViewState
+class PostDetailsPresenter(private val post: PostData) : MvpPresenter<PostDetailsView>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        if (savedInstanceState == null) {
-            this.changeFragment(TopicsFragment())
-        }
+    companion object {
+        val POST_DATA = "postData"
     }
 
-    fun changeFragment(newFragment: Fragment) {
-        supportFragmentManager.commit {
-            add(R.id.activity_content, newFragment)
-        }
+    override fun onFirstViewAttach() {
+        viewState.showPost(post)
     }
 
-    override fun onBackPressed() {
-        val fragmentManager = supportFragmentManager
-        if (fragmentManager.backStackEntryCount > 1) {
-            fragmentManager.popBackStack()
-        } else {
-            finish()
-        }
+    fun linkFabClicked() {
+
     }
 }

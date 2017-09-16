@@ -26,59 +26,58 @@
 package ru.endlesscode.producthuntlite.ui.fragment
 
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.Toolbar
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
-import kotlinx.android.synthetic.main.posts_fragment.*
+import kotlinx.android.synthetic.main.post_details_fragment.*
 import ru.endlesscode.producthuntlite.R
 import ru.endlesscode.producthuntlite.api.PostData
-import ru.endlesscode.producthuntlite.mvp.common.Item
-import ru.endlesscode.producthuntlite.mvp.presenter.PostsPresenter
-import ru.endlesscode.producthuntlite.ui.activity.MainActivity
-import ru.endlesscode.producthuntlite.ui.adapter.PostsAdapter
+import ru.endlesscode.producthuntlite.inflate
+import ru.endlesscode.producthuntlite.load
+import ru.endlesscode.producthuntlite.mvp.presenter.PostDetailsPresenter
+import ru.endlesscode.producthuntlite.mvp.view.PostDetailsView
 
-class PostsFragment : ItemsFragment<PostsPresenter>() {
+class PostDetailsFragment : MvpAppCompatFragment(), PostDetailsView {
 
     companion object {
-        fun instance(topic: Item): PostsFragment {
+        fun instance(post: PostData): PostDetailsFragment {
             val args = Bundle()
-            args.putInt(PostsPresenter.TOPIC_ID, topic.id)
-            args.putString(PostsPresenter.TOPIC_NAME, topic.name)
+            args.putSerializable(PostDetailsPresenter.POST_DATA, post)
 
-            val fragment = PostsFragment()
+            val fragment = PostDetailsFragment()
             fragment.arguments = args
             return fragment
         }
     }
 
     @InjectPresenter
-    override lateinit var presenter: PostsPresenter
+    lateinit var presenter: PostDetailsPresenter
 
-    override val layoutId = R.layout.posts_fragment
-    override val itemsRefresh: SwipeRefreshLayout by lazy { posts_refresh }
-    override val toolbar: Toolbar by lazy { posts_toolbar }
-    override val itemsListId: Int by lazy { R.id.posts_list }
-
-    override val title by lazy { "Topic: ${arguments.getString(PostsPresenter.TOPIC_NAME)}" }
+    private val linkFab by lazy { link_fab }
+    private val title by lazy { post_title }
+    private val desc by lazy { post_desc }
+    private val screenshot by lazy { post_screenshot }
 
     @ProvidePresenter
-    fun providePresenter() = PostsPresenter(
-            arguments.getInt(PostsPresenter.TOPIC_ID)
+    fun providePresenter() = PostDetailsPresenter(
+            arguments.getSerializable(PostDetailsPresenter.POST_DATA) as PostData
     )
+
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View?
+            = container?.inflate(R.layout.post_details_fragment)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        itemsList.addDivider()
+        linkFab.setOnClickListener { presenter.linkFabClicked() }
     }
 
-    override fun createAdapter() = PostsAdapter(presenter)
-
-    override fun openItem(item: Item) {
-        val activity = activity as MainActivity
-        activity.changeFragment(PostDetailsFragment.instance(item as PostData))
+    override fun showPost(post: PostData) {
+        title.text = post.name
+        desc.text = post.desc
+        screenshot.load(post.screenshotUrl.px300)
     }
 }
-
