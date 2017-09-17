@@ -30,8 +30,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.post_item.view.*
 import ru.endlesscode.producthuntlite.R
-import ru.endlesscode.producthuntlite.api.PostData
 import ru.endlesscode.producthuntlite.load
+import ru.endlesscode.producthuntlite.mvp.model.Post
 import ru.endlesscode.producthuntlite.mvp.view.PostView
 import ru.endlesscode.producthuntlite.ui.common.ViewTypeHolder
 
@@ -42,14 +42,14 @@ class PostViewHolder(parent: ViewGroup) : ViewTypeHolder(parent, R.layout.post_i
     private var votes: TextView = itemView.post_votes
     private var thumbnail: ImageView = itemView.post_thumbnail
 
-    override lateinit var item: PostData
+    override lateinit var item: Post
 
-    override fun setData(data: PostData) {
+    override fun setData(data: Post) {
         this.item = data
 
         title.text = data.name
         desc.text = data.desc
         votes.text = data.votesCount.toString()
-        thumbnail.load(data.thumbnailUrl)
+        thumbnail.load(data.thumbnail.url)
     }
 }

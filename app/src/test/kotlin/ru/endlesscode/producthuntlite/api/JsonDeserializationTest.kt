@@ -43,12 +43,11 @@ class JsonDeserializationTest(private val jsonName: String, private val expected
             val post = PostData(
                     id = 1,
                     name = "Awesome Idea #27",
-                    day = "2017-09-14",
-                    thumbnail = ThumbnailData(1, "https://ph-files.imgix.net/d4087afd-07fa-4037-9219-a83acddf2fe2?auto=format&fit=crop&h=570&w=430"),
+                    thumbnail = ThumbnailData("https://ph-files.imgix.net/d4087afd-07fa-4037-9219-a83acddf2fe2?auto=format&fit=crop&h=570&w=430"),
                     desc = "Great new search engine",
-                    categoryId = 0,
                     votesCount = 0,
-                    screenshotUrl = ScreenshotUrl(
+                    redirectUrl = "http://www.producthunt.com/r/33abf1c8e8db87/1?app_id=1",
+                    screenshot = ScreenshotData(
                             px300 = "http://placehold.it/850x850.png",
                             px850 = "http://placehold.it/850x850.png"
                     )

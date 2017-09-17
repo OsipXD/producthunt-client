@@ -25,10 +25,13 @@
 
 package ru.endlesscode.producthuntlite
 
+import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,10 +41,11 @@ import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import retrofit2.Call
-import ru.endlesscode.producthuntlite.api.ListWrapper
+import ru.endlesscode.producthuntlite.api.ListResponse
 import ru.endlesscode.producthuntlite.ui.common.InfiniteScrollListener
 import ru.gildor.coroutines.retrofit.awaitResult
 import ru.gildor.coroutines.retrofit.getOrThrow
+
 
 @Suppress("UNCHECKED_CAST")
 fun <T : View> ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false)
@@ -54,7 +58,7 @@ fun RecyclerView.addOnScrollListener(threshold: Int = 5, action: () -> Unit): In
     return listener
 }
 
-fun <T> Call<out ListWrapper<T>>.doInBackground(uiAction: (List<T>) -> Unit) = launch(CommonPool) {
+fun <T> Call<out ListResponse<T>>.doInBackground(uiAction: (List<T>) -> Unit) = launch(CommonPool) {
     val result = awaitResult()
     val items = result.getOrThrow().get()
 
@@ -64,11 +68,14 @@ fun <T> Call<out ListWrapper<T>>.doInBackground(uiAction: (List<T>) -> Unit) = l
 }
 
 fun ImageView.load(url: String?) {
-    if (url == null || url.isEmpty()) {
-        Picasso.with(context).load(R.mipmap.ic_launcher).into(this)
-    } else {
-        Picasso.with(context).load(url).into(this)
-    }
+    Log.d("tag", url)
+    val pic: Picasso = Picasso.with(context)
+    pic.setIndicatorsEnabled(true)
+    pic.load(url)
+            .fit()
+            .centerInside()
+            .error(R.mipmap.ic_launcher)
+            .into(this)
 }
 
 fun FragmentManager.commit(fragment: Fragment) {
@@ -77,3 +84,6 @@ fun FragmentManager.commit(fragment: Fragment) {
             .addToBackStack(null)
             .commit()
 }
+
+fun Context.convertToPx(dp: Float): Float
+        = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics)

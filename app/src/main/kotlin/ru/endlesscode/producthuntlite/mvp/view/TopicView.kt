@@ -26,7 +26,7 @@
 package ru.endlesscode.producthuntlite.mvp.view
 
 import com.arellomobile.mvp.MvpView
-import ru.endlesscode.producthuntlite.api.TopicData
-import ru.endlesscode.producthuntlite.mvp.common.ItemHolder
+import ru.endlesscode.producthuntlite.mvp.model.ItemHolder
+import ru.endlesscode.producthuntlite.mvp.model.Topic
 
-interface TopicView : MvpView, ItemHolder<TopicData>
+interface TopicView : MvpView, ItemHolder<Topic>

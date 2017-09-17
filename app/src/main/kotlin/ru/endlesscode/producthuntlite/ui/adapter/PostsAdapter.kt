@@ -26,10 +26,10 @@
 package ru.endlesscode.producthuntlite.ui.adapter
 
 import android.view.ViewGroup
-import ru.endlesscode.producthuntlite.api.PostData
+import ru.endlesscode.producthuntlite.mvp.model.Post
 import ru.endlesscode.producthuntlite.mvp.presenter.PostsPresenter
 
-class PostsAdapter(presenter: PostsPresenter) : ItemsAdapter<PostData, PostViewHolder>(presenter) {
+class PostsAdapter(presenter: PostsPresenter) : ItemsAdapter<Post, PostViewHolder>(presenter) {
 
     override fun createViewHolder(parent: ViewGroup): PostViewHolder = PostViewHolder(parent)
 }

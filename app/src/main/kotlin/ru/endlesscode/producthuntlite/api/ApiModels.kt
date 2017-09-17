@@ -26,56 +26,55 @@
 package ru.endlesscode.producthuntlite.api
 
 import com.google.gson.annotations.SerializedName
-import ru.endlesscode.producthuntlite.mvp.common.Item
-import java.io.Serializable
+import ru.endlesscode.producthuntlite.mvp.model.Post
+import ru.endlesscode.producthuntlite.mvp.model.Screenshot
+import ru.endlesscode.producthuntlite.mvp.model.Thumbnail
+import ru.endlesscode.producthuntlite.mvp.model.Topic
 
-interface ListWrapper<out T> {
+interface ListResponse<out T> {
     fun get(): List<T>
 }
 
-class TopicsResponse(val topics: List<TopicData>) : ListWrapper<TopicData> {
-
+class TopicsResponse(val topics: List<TopicData>) : ListResponse<TopicData> {
     override fun get(): List<TopicData> = topics
-
     override fun toString(): String = topics.toString()
+}
+
+class PostsResponse(val posts: List<PostData>) : ListResponse<PostData> {
+    override fun get(): List<PostData> = posts
+    override fun toString(): String = posts.toString()
 }
 
 data class TopicData(
         override val id: Int,
         override val name: String,
-        val slug: String,
-        val description: String,
-        val image: String?
-) : Item, Serializable
-
-class PostsResponse(val posts: List<PostData>) : ListWrapper<PostData> {
-
-    override fun get(): List<PostData> = posts
-
-    override fun toString(): String = posts.toString()
-}
+        override val slug: String,
+        override val description: String,
+        override val image: String?
+) : Topic
 
 data class PostData(
         override val id: Int,
         override val name: String,
-        val day: String,
-        val thumbnail: ThumbnailData,
-        @SerializedName("redirect_url") val redirectUrl: String,
-        @SerializedName("screenshot_url") val screenshotUrl: ScreenshotUrl,
-        @SerializedName("tagline") val desc: String,
-        @SerializedName("category_id") val categoryId: Int,
-        @SerializedName("votes_count") val votesCount: Int
-) : Item, Serializable {
-    val thumbnailUrl: String
-        get() = thumbnail.imageUrl
-}
+        override val thumbnail: ThumbnailData,
+        @SerializedName("redirect_url")
+        override val redirectUrl: String,
+        @SerializedName("screenshot_url")
+        override val screenshot: ScreenshotData,
+        @SerializedName("tagline")
+        override val desc: String,
+        @SerializedName("votes_count")
+        override val votesCount: Int
+) : Post
 
-data class ScreenshotUrl(
-        @SerializedName("300px") val px300: String,
-        @SerializedName("850px") val px850: String
-) : Serializable
+data class ScreenshotData(
+        @SerializedName("300px")
+        override val px300: String,
+        @SerializedName("850px")
+        override val px850: String
+) : Screenshot
 
 data class ThumbnailData(
-        val id: Int,
-        @SerializedName("image_url") val imageUrl: String
-) : Serializable
+        @SerializedName("image_url")
+        override val url: String
+) : Thumbnail

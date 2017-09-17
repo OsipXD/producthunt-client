@@ -28,7 +28,7 @@ package ru.endlesscode.producthuntlite.mvp.view
 import com.arellomobile.mvp.MvpView
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
-import ru.endlesscode.producthuntlite.mvp.common.Item
+import ru.endlesscode.producthuntlite.mvp.model.Item
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface ItemsView : MvpView {

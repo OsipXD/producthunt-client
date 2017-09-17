@@ -37,7 +37,7 @@ import android.view.ViewGroup
 import com.arellomobile.mvp.MvpAppCompatFragment
 import ru.endlesscode.producthuntlite.addOnScrollListener
 import ru.endlesscode.producthuntlite.inflate
-import ru.endlesscode.producthuntlite.mvp.common.Item
+import ru.endlesscode.producthuntlite.mvp.model.Item
 import ru.endlesscode.producthuntlite.mvp.presenter.ItemsPresenter
 import ru.endlesscode.producthuntlite.mvp.view.ItemsView
 import ru.endlesscode.producthuntlite.ui.common.InfiniteScrollListener

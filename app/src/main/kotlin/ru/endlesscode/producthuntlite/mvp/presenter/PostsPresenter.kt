@@ -26,11 +26,11 @@
 package ru.endlesscode.producthuntlite.mvp.presenter
 
 import com.arellomobile.mvp.InjectViewState
-import ru.endlesscode.producthuntlite.api.PostData
 import ru.endlesscode.producthuntlite.api.ProductHunt
+import ru.endlesscode.producthuntlite.mvp.model.Post
 
 @InjectViewState
-class PostsPresenter(private val topicId: Int) : ItemsPresenter<PostData>() {
+class PostsPresenter(private val topicId: Int) : ItemsPresenter<Post>() {
 
     companion object {
         val TOPIC_ID = "topicId"

@@ -28,12 +28,12 @@ package ru.endlesscode.producthuntlite.mvp.view
 import com.arellomobile.mvp.MvpView
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
-import ru.endlesscode.producthuntlite.api.PostData
+import ru.endlesscode.producthuntlite.mvp.model.Post
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface PostDetailsView : MvpView {
 
-    fun showPost(post: PostData)
+    fun showPost(post: Post)
 
     fun openLink(link: String)
 }

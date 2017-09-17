@@ -23,10 +23,39 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.mvp.common
+package ru.endlesscode.producthuntlite.mvp.model
 
-interface ItemHolder<T : Item> {
-    var item: T
+import retrofit2.Call
+import ru.endlesscode.producthuntlite.api.ListResponse
 
-    fun setData(data: T)
+interface ItemList<T : Item> {
+    val items: MutableList<T>
+
+    var isInLoading: Boolean
+
+    val count
+        get() = items.size
+
+    fun refresh() {
+        loadItems(append = false)
+    }
+
+    fun loadItems(append: Boolean = true)
+
+    fun requestItems()
+
+    fun addItems(topics: List<T>, append: Boolean = true) {
+        if (!append) {
+            this.items.clear()
+        }
+
+        this.items.addAll(topics)
+        isInLoading = false
+    }
+
+    fun onBindItemAtPosition(position: Int, holder: ItemHolder<T>) {
+        holder.setData(items[position])
+    }
+
+    fun getApiCall(before: Int? = null): Call<out ListResponse<T>>
 }

@@ -27,8 +27,8 @@ package ru.endlesscode.producthuntlite.ui.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import ru.endlesscode.producthuntlite.mvp.common.Item
-import ru.endlesscode.producthuntlite.mvp.common.ItemHolder
+import ru.endlesscode.producthuntlite.mvp.model.Item
+import ru.endlesscode.producthuntlite.mvp.model.ItemHolder
 import ru.endlesscode.producthuntlite.mvp.presenter.ItemsPresenter
 import ru.endlesscode.producthuntlite.ui.common.ViewTypeHolder
 

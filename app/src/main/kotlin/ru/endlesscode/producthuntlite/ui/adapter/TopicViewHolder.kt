@@ -28,8 +28,8 @@ package ru.endlesscode.producthuntlite.ui.adapter
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.topic_item.view.*
 import ru.endlesscode.producthuntlite.R
-import ru.endlesscode.producthuntlite.api.TopicData
 import ru.endlesscode.producthuntlite.load
+import ru.endlesscode.producthuntlite.mvp.model.Topic
 import ru.endlesscode.producthuntlite.mvp.view.TopicView
 import ru.endlesscode.producthuntlite.ui.common.ViewTypeHolder
 
@@ -39,9 +39,9 @@ class TopicViewHolder(parent: ViewGroup) : ViewTypeHolder(parent, R.layout.topic
     private val desc = itemView.topic_desc
     private val icon = itemView.topic_icon
 
-    override lateinit var item: TopicData
+    override lateinit var item: Topic
 
-    override fun setData(data: TopicData) {
+    override fun setData(data: Topic) {
         item = data
 
         name.text = data.name

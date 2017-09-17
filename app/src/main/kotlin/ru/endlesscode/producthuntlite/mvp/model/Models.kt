@@ -23,39 +23,38 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.mvp.common
+package ru.endlesscode.producthuntlite.mvp.model
 
-import retrofit2.Call
-import ru.endlesscode.producthuntlite.api.ListWrapper
+import java.io.Serializable
 
-interface ItemList<T : Item> {
-    val items: MutableList<T>
+interface Item : Serializable {
+    val id: Int
+    val name: String
+}
 
-    var isInLoading: Boolean
+interface Topic : Item, Serializable {
+    override val id: Int
+    override val name: String
+    val slug: String
+    val description: String
+    val image: String?
+}
 
-    val count
-        get() = items.size
+interface Post : Item, Serializable {
+    override val id: Int
+    override val name: String
+    val thumbnail: Thumbnail
+    val redirectUrl: String
+    val screenshot: Screenshot
+    val desc: String
+    val votesCount: Int
+}
 
-    fun refresh() {
-        loadItems(append = false)
-    }
+interface Thumbnail : Serializable {
+    val url: String
+}
 
-    fun loadItems(append: Boolean = true)
-
-    fun requestItems()
-
-    fun addItems(topics: List<T>, append: Boolean = true) {
-        if (!append) {
-            this.items.clear()
-        }
-
-        this.items.addAll(topics)
-        isInLoading = false
-    }
-
-    fun onBindItemAtPosition(position: Int, holder: ItemHolder<T>) {
-        holder.setData(items[position])
-    }
-
-    fun getApiCall(before: Int? = null): Call<out ListWrapper<T>>
+interface Screenshot : Serializable {
+    val px300: String
+    val px850: String
 }

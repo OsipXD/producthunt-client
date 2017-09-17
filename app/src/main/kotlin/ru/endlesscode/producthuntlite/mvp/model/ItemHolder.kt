@@ -23,11 +23,10 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.mvp.common
+package ru.endlesscode.producthuntlite.mvp.model
 
-import java.io.Serializable
+interface ItemHolder<T : Item> {
+    var item: T
 
-interface Item : Serializable {
-    val id: Int
-    val name: String
+    fun setData(data: T)
 }

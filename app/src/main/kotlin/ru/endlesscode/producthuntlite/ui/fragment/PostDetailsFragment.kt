@@ -39,6 +39,7 @@ import ru.endlesscode.producthuntlite.R
 import ru.endlesscode.producthuntlite.api.PostData
 import ru.endlesscode.producthuntlite.inflate
 import ru.endlesscode.producthuntlite.load
+import ru.endlesscode.producthuntlite.mvp.model.Post
 import ru.endlesscode.producthuntlite.mvp.presenter.PostDetailsPresenter
 import ru.endlesscode.producthuntlite.mvp.view.PostDetailsView
 import ru.endlesscode.producthuntlite.ui.activity.MainActivity
@@ -84,10 +85,10 @@ class PostDetailsFragment : MvpAppCompatFragment(), PostDetailsView {
         }
     }
 
-    override fun showPost(post: PostData) {
+    override fun showPost(post: Post) {
         title.text = post.name
         desc.text = post.desc
-        screenshot.load(post.screenshotUrl.px300)
+        screenshot.load(post.screenshot.px300)
     }
 
     override fun openLink(link: String) {

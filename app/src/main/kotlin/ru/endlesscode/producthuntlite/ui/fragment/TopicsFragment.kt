@@ -30,7 +30,7 @@ import android.support.v7.widget.Toolbar
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.topics_fragment.*
 import ru.endlesscode.producthuntlite.R
-import ru.endlesscode.producthuntlite.mvp.common.Item
+import ru.endlesscode.producthuntlite.mvp.model.Item
 import ru.endlesscode.producthuntlite.mvp.presenter.TopicsPresenter
 import ru.endlesscode.producthuntlite.ui.activity.MainActivity
 import ru.endlesscode.producthuntlite.ui.adapter.TopicsAdapter

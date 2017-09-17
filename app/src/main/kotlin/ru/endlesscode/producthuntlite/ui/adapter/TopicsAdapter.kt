@@ -26,10 +26,10 @@
 package ru.endlesscode.producthuntlite.ui.adapter
 
 import android.view.ViewGroup
-import ru.endlesscode.producthuntlite.api.TopicData
+import ru.endlesscode.producthuntlite.mvp.model.Topic
 import ru.endlesscode.producthuntlite.mvp.presenter.TopicsPresenter
 
-class TopicsAdapter(presenter: TopicsPresenter) : ItemsAdapter<TopicData, TopicViewHolder>(presenter) {
+class TopicsAdapter(presenter: TopicsPresenter) : ItemsAdapter<Topic, TopicViewHolder>(presenter) {
 
     override fun createViewHolder(parent: ViewGroup) = TopicViewHolder(parent)
 }
