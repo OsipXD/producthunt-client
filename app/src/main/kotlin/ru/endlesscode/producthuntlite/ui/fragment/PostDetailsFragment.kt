@@ -41,6 +41,7 @@ import ru.endlesscode.producthuntlite.inflate
 import ru.endlesscode.producthuntlite.load
 import ru.endlesscode.producthuntlite.mvp.presenter.PostDetailsPresenter
 import ru.endlesscode.producthuntlite.mvp.view.PostDetailsView
+import ru.endlesscode.producthuntlite.ui.activity.MainActivity
 
 
 class PostDetailsFragment : MvpAppCompatFragment(), PostDetailsView {
@@ -59,6 +60,7 @@ class PostDetailsFragment : MvpAppCompatFragment(), PostDetailsView {
     @InjectPresenter
     lateinit var presenter: PostDetailsPresenter
 
+    private val toolbar by lazy { post_details_toolbar }
     private val linkFab by lazy { link_fab }
     private val title by lazy { post_title }
     private val desc by lazy { post_desc }
@@ -76,6 +78,10 @@ class PostDetailsFragment : MvpAppCompatFragment(), PostDetailsView {
         super.onViewCreated(view, savedInstanceState)
 
         linkFab.setOnClickListener { presenter.linkFabClicked() }
+        toolbar.setNavigationOnClickListener {
+            val activity = context as MainActivity
+            activity.onBackPressed()
+        }
     }
 
     override fun showPost(post: PostData) {

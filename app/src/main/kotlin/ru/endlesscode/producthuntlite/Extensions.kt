@@ -25,8 +25,8 @@
 
 package ru.endlesscode.producthuntlite
 
+import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -71,9 +71,9 @@ fun ImageView.load(url: String?) {
     }
 }
 
-fun FragmentManager.commit(action: FragmentTransaction.() -> FragmentTransaction) {
+fun FragmentManager.commit(fragment: Fragment) {
     this.beginTransaction()
-            .action()
+            .add(R.id.main_activity_content, fragment, fragment.tag)
             .addToBackStack(null)
             .commit()
 }

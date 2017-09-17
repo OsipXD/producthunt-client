@@ -44,9 +44,7 @@ class MainActivity : MvpAppCompatActivity() {
     }
 
     fun changeFragment(newFragment: Fragment) {
-        supportFragmentManager.commit {
-            add(R.id.activity_content, newFragment)
-        }
+        supportFragmentManager.commit(newFragment)
     }
 
     override fun onBackPressed() {
