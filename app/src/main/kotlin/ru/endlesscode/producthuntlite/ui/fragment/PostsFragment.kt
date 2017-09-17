@@ -73,6 +73,10 @@ class PostsFragment : ItemsFragment<PostsPresenter>() {
         super.onViewCreated(view, savedInstanceState)
 
         itemsList.addDivider()
+        toolbar.setNavigationOnClickListener {
+            val activity = context as MainActivity
+            activity.onBackPressed()
+        }
     }
 
     override fun createAdapter() = PostsAdapter(presenter)

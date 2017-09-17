@@ -27,6 +27,7 @@ package ru.endlesscode.producthuntlite.ui
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -82,10 +83,11 @@ fun ImageView.load(url: String?) {
 fun String.resize(width: Int, height: Int = width): String
         = this.parametrize("w" to width, "h" to height)
 
-fun FragmentManager.commit(fragment: Fragment) {
+fun FragmentManager.commit(fragment: Fragment, init: FragmentTransaction.() -> FragmentTransaction) {
     this.beginTransaction()
             .add(R.id.main_activity_content, fragment, fragment.tag)
             .addToBackStack(null)
+            .init()
             .commit()
 }
 

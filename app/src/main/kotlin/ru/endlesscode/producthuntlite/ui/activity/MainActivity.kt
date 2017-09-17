@@ -44,7 +44,9 @@ class MainActivity : MvpAppCompatActivity() {
     }
 
     fun changeFragment(newFragment: Fragment) {
-        supportFragmentManager.commit(newFragment)
+        supportFragmentManager.commit(newFragment) {
+            setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+        }
     }
 
     override fun onBackPressed() {
