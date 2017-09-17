@@ -62,7 +62,7 @@ class PostsFragment : ItemsFragment<PostsPresenter>() {
     override val toolbar: Toolbar by lazy { posts_toolbar }
     override val itemsListId: Int by lazy { R.id.posts_list }
 
-    override val title by lazy { "Topic: ${arguments.getString(PostsPresenter.TOPIC_NAME)}" }
+    override val title: String by lazy { arguments.getString(PostsPresenter.TOPIC_NAME) }
 
     @ProvidePresenter
     fun providePresenter() = PostsPresenter(

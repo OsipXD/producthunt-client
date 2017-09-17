@@ -71,9 +71,7 @@ fun ImageView.resizeAndLoad(url: String?) {
 
 fun ImageView.load(url: String?) {
     Log.d("loadingImage", url)
-    val pic = Picasso.with(context)
-    pic.setIndicatorsEnabled(true)
-    pic.load(url)
+    Picasso.with(context).load(url)
             .error(R.color.colorAccent)
             .placeholder(R.color.colorPrimary)
             .fit()
