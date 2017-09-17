@@ -63,7 +63,6 @@ class PostDetailsFragment : MvpAppCompatFragment(), PostDetailsView {
 
     private val toolbar by lazy { post_details_toolbar }
     private val linkFab by lazy { link_fab }
-    private val title by lazy { post_title }
     private val desc by lazy { post_desc }
     private val screenshot by lazy { post_screenshot }
     private val votes by lazy { post_votes }
@@ -87,7 +86,7 @@ class PostDetailsFragment : MvpAppCompatFragment(), PostDetailsView {
     }
 
     override fun showPost(post: Post) {
-        title.text = post.name
+        toolbar.title = post.name
         desc.text = post.desc
         votes.text = post.votesCount.toString()
         screenshot.whenWeKnowSize { load(post.screenshot.small) }
