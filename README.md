@@ -1,4 +1,4 @@
-![Logo](demo/product_hunt_lite.svg) 
+![Logo](demo/product_hunt_lite.png) 
 ---
 
 ### Demo
