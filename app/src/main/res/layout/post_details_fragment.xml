@@ -40,7 +40,7 @@
         <ImageView
                 android:id="@+id/post_screenshot"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="@dimen/post_screenshot_size"
                 android:scaleType="centerCrop"
                 android:contentDescription="@string/screenshot_desc"
                 android:background="#ececec"

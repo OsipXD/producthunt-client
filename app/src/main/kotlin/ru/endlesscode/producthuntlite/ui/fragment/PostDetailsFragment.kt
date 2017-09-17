@@ -36,19 +36,19 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import kotlinx.android.synthetic.main.post_details_fragment.*
 import ru.endlesscode.producthuntlite.R
-import ru.endlesscode.producthuntlite.api.PostData
 import ru.endlesscode.producthuntlite.mvp.model.Post
 import ru.endlesscode.producthuntlite.mvp.presenter.PostDetailsPresenter
 import ru.endlesscode.producthuntlite.mvp.view.PostDetailsView
 import ru.endlesscode.producthuntlite.ui.activity.MainActivity
 import ru.endlesscode.producthuntlite.ui.inflate
 import ru.endlesscode.producthuntlite.ui.load
+import ru.endlesscode.producthuntlite.ui.whenWeKnowSize
 
 
 class PostDetailsFragment : MvpAppCompatFragment(), PostDetailsView {
 
     companion object {
-        fun instance(post: PostData): PostDetailsFragment {
+        fun instance(post: Post): PostDetailsFragment {
             val args = Bundle()
             args.putSerializable(PostDetailsPresenter.POST_DATA, post)
 
@@ -69,7 +69,7 @@ class PostDetailsFragment : MvpAppCompatFragment(), PostDetailsView {
 
     @ProvidePresenter
     fun providePresenter() = PostDetailsPresenter(
-            arguments.getSerializable(PostDetailsPresenter.POST_DATA) as PostData
+            arguments.getSerializable(PostDetailsPresenter.POST_DATA) as Post
     )
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View?
@@ -88,7 +88,7 @@ class PostDetailsFragment : MvpAppCompatFragment(), PostDetailsView {
     override fun showPost(post: Post) {
         title.text = post.name
         desc.text = post.desc
-        screenshot.load(post.screenshot.px300)
+        screenshot.whenWeKnowSize { load(post.screenshot.small) }
     }
 
     override fun openLink(link: String) {

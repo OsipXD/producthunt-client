@@ -33,7 +33,8 @@ import ru.endlesscode.producthuntlite.R
 import ru.endlesscode.producthuntlite.mvp.model.Post
 import ru.endlesscode.producthuntlite.mvp.view.PostView
 import ru.endlesscode.producthuntlite.ui.common.ViewTypeHolder
-import ru.endlesscode.producthuntlite.ui.load
+import ru.endlesscode.producthuntlite.ui.resizeAndLoad
+import ru.endlesscode.producthuntlite.ui.whenWeKnowSize
 
 class PostViewHolder(parent: ViewGroup) : ViewTypeHolder(parent, R.layout.post_item), PostView {
 
@@ -50,6 +51,6 @@ class PostViewHolder(parent: ViewGroup) : ViewTypeHolder(parent, R.layout.post_i
         title.text = data.name
         desc.text = data.desc
         votes.text = data.votesCount.toString()
-        thumbnail.load(data.thumbnail.url)
+        thumbnail.whenWeKnowSize { resizeAndLoad(data.thumbnail.url) }
     }
 }

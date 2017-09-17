@@ -25,46 +25,64 @@
 
 package ru.endlesscode.producthuntlite.ui
 
-import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import ru.endlesscode.producthuntlite.R
+import ru.endlesscode.producthuntlite.mvp.parametrize
 import ru.endlesscode.producthuntlite.ui.common.InfiniteScrollListener
 
 @Suppress("UNCHECKED_CAST")
 fun <T : View> ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false)
         = LayoutInflater.from(this.context).inflate(layoutId, this, attachToRoot) as T
 
-fun RecyclerView.addOnScrollListener(threshold: Int = 5, action: () -> Unit): InfiniteScrollListener {
+fun RecyclerView.addThresholdListener(threshold: Int = 50, action: (Int) -> Unit): InfiniteScrollListener {
     val listener = InfiniteScrollListener(layoutManager as LinearLayoutManager, threshold, action)
     this.addOnScrollListener(listener)
 
     return listener
 }
 
+fun ImageView.whenWeKnowSize(init: ImageView.() -> Unit) {
+    if (width == 0 && height == 0 && viewTreeObserver.isAlive) {
+        viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                this@whenWeKnowSize.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                init()
+            }
+        })
+    } else {
+        init()
+    }
+}
+
+fun ImageView.resizeAndLoad(url: String?) {
+    load(url?.resize(width, height))
+}
+
 fun ImageView.load(url: String?) {
-    Log.d("tag", url)
-    val pic: Picasso = Picasso.with(context)
+    Log.d("loadingImage", url)
+    val pic = Picasso.with(context)
     pic.setIndicatorsEnabled(true)
     pic.load(url)
+            .error(R.color.colorAccent)
+            .placeholder(R.color.colorPrimary)
             .fit()
-            .centerInside()
-            .error(R.mipmap.ic_launcher)
+            .centerCrop()
             .into(this)
 }
 
-fun Context.convertToPx(dp: Float): Float
-        = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics)
+fun String.resize(width: Int, height: Int = width): String
+        = this.parametrize("w" to width, "h" to height)
 
 fun FragmentManager.commit(fragment: Fragment) {
     this.beginTransaction()

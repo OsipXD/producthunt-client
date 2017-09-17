@@ -42,3 +42,25 @@ fun <T> Call<out ListResponse<T>>.doInBackground(uiAction: (List<T>) -> Unit) = 
         uiAction(items)
     }
 }
+
+fun String.parametrize(vararg parameters: Pair<String, Any>): String {
+    var result = this
+    parameters.forEach { (name, value) ->
+        val regex = Regex("[&|?]$name=\\w+")
+        if (regex.containsMatchIn(this)) {
+            result = regex.replace(result) {
+                it.value.replaceAfter("$name=", value.toString())
+            }
+        } else {
+            val prefix = when {
+                result matches Regex(".*[?|&]$") -> ""
+                result.contains('?') -> "&"
+                else -> "?"
+            }
+
+            result += "$prefix$name=$value"
+        }
+    }
+
+    return result
+}

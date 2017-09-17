@@ -55,6 +55,6 @@ interface Thumbnail : Serializable {
 }
 
 interface Screenshot : Serializable {
-    val px300: String
-    val px850: String
+    val small: String
+    val big: String
 }

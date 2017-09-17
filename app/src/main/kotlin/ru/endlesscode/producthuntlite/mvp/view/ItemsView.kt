@@ -33,11 +33,13 @@ import ru.endlesscode.producthuntlite.mvp.model.Item
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface ItemsView : MvpView {
 
-    fun updateView()
+    fun onAddedItems(position: Int, count: Int)
 
-    fun onStartRefreshing()
+    fun onStartLoading()
 
-    fun onEndRefreshing()
+    fun onEndLoading()
 
     fun openItem(item: Item)
+
+    fun onItemsClear()
 }

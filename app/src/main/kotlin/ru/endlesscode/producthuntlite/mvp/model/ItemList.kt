@@ -42,7 +42,7 @@ interface ItemList<T : Item> {
 
     fun loadItems(append: Boolean = true)
 
-    fun requestItems()
+    fun requestItems(count: Int)
 
     fun addItems(topics: List<T>, append: Boolean = true) {
         if (!append) {
@@ -57,5 +57,5 @@ interface ItemList<T : Item> {
         holder.setData(items[position])
     }
 
-    fun getApiCall(before: Int? = null): Call<out ListResponse<T>>
+    fun getApiCall(before: Int? = null, count: Int = 50): Call<out ListResponse<T>>
 }

@@ -23,20 +23,30 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.mvp.presenter
+package ru.endlesscode.producthuntlite.mvp
 
-import com.arellomobile.mvp.InjectViewState
-import retrofit2.Call
-import ru.endlesscode.producthuntlite.api.ListResponse
-import ru.endlesscode.producthuntlite.api.ProductHunt
-import ru.endlesscode.producthuntlite.mvp.model.Topic
-import ru.endlesscode.producthuntlite.mvp.model.TopicItem
+import org.junit.Test
+import kotlin.test.assertEquals
 
-@InjectViewState
-class TopicsPresenter : ItemsPresenter<Topic>() {
+class HttpExtensionsKtTest {
 
-    override fun createItem(item: Topic) = TopicItem(item)
+    @Test
+    fun parametrize_mustRightReplaceGivenParameters() {
+        val link = "https://ph-files.imgix.net/c398000e-b38f-4432-8dc6-06f487039c64?h=570&w=430&foo=bar"
+        val expected = "https://ph-files.imgix.net/c398000e-b38f-4432-8dc6-06f487039c64?h=100&w=100&foo=bar"
+        val actual = link.parametrize("h" to 100, "w" to "100")
 
-    override fun getApiCall(before: Int?, count: Int): Call<out ListResponse<Topic>>
-            = ProductHunt.api.getTopics(count, before)
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun parametrize_shouldAddNotExistingParameters() {
+        val link = "https://ph-files.imgix.net/c398000e-b38f-4432-8dc6-06f487039c64"
+        val expected = "https://ph-files.imgix.net/c398000e-b38f-4432-8dc6-06f487039c64?h=100&w=100"
+        val actual1 = link.parametrize("h" to 100, "w" to 100)
+        val actual2 = "$link?".parametrize("h" to 100, "w" to 100)
+
+        assertEquals(expected, actual1)
+        assertEquals(expected, actual2)
+    }
 }

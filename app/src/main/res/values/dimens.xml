@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="topic_icon_size">40dp</dimen>
+    <dimen name="post_thumbnail_size">80dp</dimen>
+    <dimen name="post_screenshot_size">300dp</dimen>
+</resources>

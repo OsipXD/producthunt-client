@@ -30,6 +30,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +38,7 @@ import com.arellomobile.mvp.MvpAppCompatFragment
 import ru.endlesscode.producthuntlite.mvp.model.Item
 import ru.endlesscode.producthuntlite.mvp.presenter.ItemsPresenter
 import ru.endlesscode.producthuntlite.mvp.view.ItemsView
-import ru.endlesscode.producthuntlite.ui.addOnScrollListener
+import ru.endlesscode.producthuntlite.ui.addThresholdListener
 import ru.endlesscode.producthuntlite.ui.common.InfiniteScrollListener
 import ru.endlesscode.producthuntlite.ui.inflate
 
@@ -66,8 +67,13 @@ abstract class ItemsFragment<TPresenter : ItemsPresenter<out Item>> : MvpAppComp
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        itemsRefresh.setOnRefreshListener { presenter.refresh() }
+        itemsRefresh.setOnRefreshListener {
+            Log.d("onRefreshListener", "refreshing items")
+            presenter.refresh()
+        }
         toolbar.title = title
+
+        presenter.onActivityCreated()
     }
 
     private fun RecyclerView.init() {
@@ -78,23 +84,28 @@ abstract class ItemsFragment<TPresenter : ItemsPresenter<out Item>> : MvpAppComp
             adapter = createAdapter()
         }
 
-        scrollListener = this.addOnScrollListener {
-            presenter.requestItems()
+        scrollListener = this.addThresholdListener { count ->
+            Log.d("onScrollListener", "requesting items")
+            presenter.requestItems(count)
         }
     }
 
     abstract fun createAdapter(): RecyclerView.Adapter<*>?
 
-    override fun updateView() {
-        itemsList.adapter.notifyDataSetChanged()
+    override fun onAddedItems(position: Int, count: Int) {
+        itemsList.adapter.notifyItemRangeInserted(position, count)
         scrollListener.onUpdate()
     }
 
-    override fun onStartRefreshing() {
+    override fun onItemsClear() {
+        itemsList.adapter.notifyDataSetChanged()
+    }
+
+    override fun onStartLoading() {
         itemsRefresh.isRefreshing = true
     }
 
-    override fun onEndRefreshing() {
+    override fun onEndLoading() {
         itemsRefresh.isRefreshing = false
     }
 }

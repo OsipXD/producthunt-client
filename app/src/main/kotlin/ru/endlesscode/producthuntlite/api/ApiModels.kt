@@ -69,9 +69,9 @@ data class PostData(
 
 data class ScreenshotData(
         @SerializedName("300px")
-        override val px300: String,
+        override val small: String,
         @SerializedName("850px")
-        override val px850: String
+        override val big: String
 ) : Screenshot
 
 data class ThumbnailData(

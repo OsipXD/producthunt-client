@@ -37,7 +37,7 @@ abstract class ItemsPresenter<TItem : Item> : MvpPresenter<ItemsView>(), ItemLis
     override val items: MutableList<TItem> = mutableListOf()
     override var isInLoading = false
 
-    override fun onFirstViewAttach() {
+    fun onActivityCreated() {
         loadItems()
     }
 
@@ -45,24 +45,30 @@ abstract class ItemsPresenter<TItem : Item> : MvpPresenter<ItemsView>(), ItemLis
         if (isInLoading) return
         isInLoading = true
 
-        viewState.onStartRefreshing()
-        getApiCall().doInBackground { items ->
-            val itemList = items.map { createItem(it) }
-            addItems(itemList, append)
-            viewState.updateView()
-            viewState.onEndRefreshing()
+        viewState.onStartLoading()
+        getApiCall().doInBackground { itemsData ->
+            val newItems = itemsData.map { createItem(it) }
+            addItems(newItems, append)
+            if (append) {
+                viewState.onAddedItems(items.size - newItems.size, newItems.size)
+            } else {
+                viewState.onItemsClear()
+            }
+            viewState.onEndLoading()
         }
     }
 
     abstract fun createItem(item: TItem): TItem
 
-    override fun requestItems() {
+    override fun requestItems(count: Int) {
         if (isInLoading) return
         isInLoading = true
 
-        getApiCall(before = items.last().id).doInBackground { items ->
-            addItems(items)
-            viewState.updateView()
+        getApiCall(before = items.last().id, count = count).doInBackground { itemsData ->
+            val newItems = itemsData.map { createItem(it) }
+            val insertPosition = items.lastIndex + 1
+            addItems(newItems)
+            viewState.onAddedItems(insertPosition, newItems.size)
         }
     }
 

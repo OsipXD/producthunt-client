@@ -48,8 +48,8 @@ class JsonDeserializationTest(private val jsonName: String, private val expected
                     votesCount = 0,
                     redirectUrl = "http://www.producthunt.com/r/33abf1c8e8db87/1?app_id=1",
                     screenshot = ScreenshotData(
-                            px300 = "http://placehold.it/850x850.png",
-                            px850 = "http://placehold.it/850x850.png"
+                            small = "http://placehold.it/850x850.png",
+                            big = "http://placehold.it/850x850.png"
                     )
             )
 

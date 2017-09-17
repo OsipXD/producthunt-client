@@ -33,8 +33,8 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import kotlinx.android.synthetic.main.posts_fragment.*
 import ru.endlesscode.producthuntlite.R
-import ru.endlesscode.producthuntlite.api.PostData
 import ru.endlesscode.producthuntlite.mvp.model.Item
+import ru.endlesscode.producthuntlite.mvp.model.Post
 import ru.endlesscode.producthuntlite.mvp.presenter.PostsPresenter
 import ru.endlesscode.producthuntlite.ui.activity.MainActivity
 import ru.endlesscode.producthuntlite.ui.adapter.PostsAdapter
@@ -79,7 +79,7 @@ class PostsFragment : ItemsFragment<PostsPresenter>() {
 
     override fun openItem(item: Item) {
         val activity = activity as MainActivity
-        activity.changeFragment(PostDetailsFragment.instance(item as PostData))
+        activity.changeFragment(PostDetailsFragment.instance(item as Post))
     }
 }
 

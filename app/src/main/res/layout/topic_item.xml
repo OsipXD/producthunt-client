@@ -10,8 +10,8 @@
             tools:background="#ddd"
             android:id="@+id/topic_icon"
             android:scaleType="centerCrop"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/topic_icon_size"
+            android:layout_height="@dimen/topic_icon_size"
             android:contentDescription="@string/topic_icon_desc"
             android:layout_centerVertical="true"
             android:layout_marginEnd="4dp"/>

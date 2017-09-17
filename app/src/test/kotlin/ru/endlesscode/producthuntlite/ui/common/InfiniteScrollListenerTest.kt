@@ -41,7 +41,7 @@ class InfiniteScrollListenerTest {
             on { itemCount } doReturn 10
         }
 
-        listener = spy(InfiniteScrollListener(layoutManager, 3, { }))
+        listener = spy(InfiniteScrollListener(layoutManager, 4, { }))
         listener.onUpdate()
     }
 
@@ -78,7 +78,7 @@ class InfiniteScrollListenerTest {
     @Test
     fun onScrolled_whenScrollDownShouldNotOutOfThreshold() {
         layoutManager.stub {
-            on { findLastVisibleItemPosition() } doReturn 5
+            on { findLastVisibleItemPosition() } doReturn 6
         }
 
         listener.onScrolled(mock(), 0, 1)

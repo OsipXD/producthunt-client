@@ -38,7 +38,8 @@ class PostsPresenter(private val topicId: Int) : ItemsPresenter<Post>() {
         val TOPIC_NAME = "topicName"
     }
 
-    override fun createItem(item: Post) = PostItem(item)
+    override fun createItem(item: Post): PostItem = PostItem(item)
 
-    override fun getApiCall(before: Int?) = ProductHunt.api.getTopicFeed(topicId, before)
+    override fun getApiCall(before: Int?, count: Int)
+            = ProductHunt.api.getTopicFeed(topicId, count, before)
 }

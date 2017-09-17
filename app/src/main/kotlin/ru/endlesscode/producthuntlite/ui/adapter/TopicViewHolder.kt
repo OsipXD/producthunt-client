@@ -31,7 +31,8 @@ import ru.endlesscode.producthuntlite.R
 import ru.endlesscode.producthuntlite.mvp.model.Topic
 import ru.endlesscode.producthuntlite.mvp.view.TopicView
 import ru.endlesscode.producthuntlite.ui.common.ViewTypeHolder
-import ru.endlesscode.producthuntlite.ui.load
+import ru.endlesscode.producthuntlite.ui.resizeAndLoad
+import ru.endlesscode.producthuntlite.ui.whenWeKnowSize
 
 class TopicViewHolder(parent: ViewGroup) : ViewTypeHolder(parent, R.layout.topic_item), TopicView {
 
@@ -46,6 +47,6 @@ class TopicViewHolder(parent: ViewGroup) : ViewTypeHolder(parent, R.layout.topic
 
         name.text = data.name
         desc.text = data.description
-        icon.load(data.image)
+        icon.whenWeKnowSize { resizeAndLoad(data.image) }
     }
 }

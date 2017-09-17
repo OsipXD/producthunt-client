@@ -33,12 +33,12 @@ import android.util.Log
 class InfiniteScrollListener(
         private val layoutManager: LinearLayoutManager,
         private val visibleThreshold: Int,
-        private val action: () -> Unit) : RecyclerView.OnScrollListener() {
+        private val action: (Int) -> Unit) : RecyclerView.OnScrollListener() {
 
     private var isLoaded = true
 
     private val outOfThreshold
-        get() = (totalItemCount - lastVisibleItem) <= visibleThreshold
+        get() = visibleThreshold - (totalItemCount - lastVisibleItem)
 
     private val totalItemCount
         get() = layoutManager.itemCount
@@ -60,7 +60,8 @@ class InfiniteScrollListener(
 
     @VisibleForTesting
     internal fun onScrollDown() {
-        if (outOfThreshold) {
+        println(outOfThreshold)
+        if (outOfThreshold > 0) {
             onOutOfThreshold()
         }
     }
@@ -69,7 +70,7 @@ class InfiniteScrollListener(
     internal fun onOutOfThreshold() {
         Log.d("InfiniteScrollListener", "End reached")
         isLoaded = false
-        action()
+        action(outOfThreshold)
     }
 
     fun onUpdate() {
