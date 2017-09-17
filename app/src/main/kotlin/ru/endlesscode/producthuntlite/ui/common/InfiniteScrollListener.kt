@@ -60,7 +60,6 @@ class InfiniteScrollListener(
 
     @VisibleForTesting
     internal fun onScrollDown() {
-        println(outOfThreshold)
         if (outOfThreshold > 0) {
             onOutOfThreshold()
         }

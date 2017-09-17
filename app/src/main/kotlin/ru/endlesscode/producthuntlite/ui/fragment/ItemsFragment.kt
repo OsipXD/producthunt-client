@@ -84,9 +84,10 @@ abstract class ItemsFragment<TPresenter : ItemsPresenter<out Item>> : MvpAppComp
             adapter = createAdapter()
         }
 
-        scrollListener = this.addThresholdListener { count ->
+        scrollListener = this.addThresholdListener {
             Log.d("onScrollListener", "requesting items")
-            presenter.requestItems(count)
+            val requestCount = (adapter.itemCount / 2).coerceAtMost(50)
+            presenter.requestItems(requestCount)
         }
     }
 
