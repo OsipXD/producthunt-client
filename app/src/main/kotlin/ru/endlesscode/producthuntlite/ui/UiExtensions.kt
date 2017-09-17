@@ -23,11 +23,12 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite
+package ru.endlesscode.producthuntlite.ui
 
 import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -37,15 +38,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
-import retrofit2.Call
-import ru.endlesscode.producthuntlite.api.ListResponse
+import ru.endlesscode.producthuntlite.R
 import ru.endlesscode.producthuntlite.ui.common.InfiniteScrollListener
-import ru.gildor.coroutines.retrofit.awaitResult
-import ru.gildor.coroutines.retrofit.getOrThrow
-
 
 @Suppress("UNCHECKED_CAST")
 fun <T : View> ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false)
@@ -56,15 +50,6 @@ fun RecyclerView.addOnScrollListener(threshold: Int = 5, action: () -> Unit): In
     this.addOnScrollListener(listener)
 
     return listener
-}
-
-fun <T> Call<out ListResponse<T>>.doInBackground(uiAction: (List<T>) -> Unit) = launch(CommonPool) {
-    val result = awaitResult()
-    val items = result.getOrThrow().get()
-
-    kotlinx.coroutines.experimental.run(UI) {
-        uiAction(items)
-    }
 }
 
 fun ImageView.load(url: String?) {
@@ -78,6 +63,9 @@ fun ImageView.load(url: String?) {
             .into(this)
 }
 
+fun Context.convertToPx(dp: Float): Float
+        = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics)
+
 fun FragmentManager.commit(fragment: Fragment) {
     this.beginTransaction()
             .add(R.id.main_activity_content, fragment, fragment.tag)
@@ -85,5 +73,7 @@ fun FragmentManager.commit(fragment: Fragment) {
             .commit()
 }
 
-fun Context.convertToPx(dp: Float): Float
-        = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics)
+fun RecyclerView.addDivider() {
+    val divider = DividerItemDecoration(this.context, (layoutManager as LinearLayoutManager).orientation)
+    this.addItemDecoration(divider)
+}

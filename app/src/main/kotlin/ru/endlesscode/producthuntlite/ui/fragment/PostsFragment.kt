@@ -38,6 +38,7 @@ import ru.endlesscode.producthuntlite.mvp.model.Item
 import ru.endlesscode.producthuntlite.mvp.presenter.PostsPresenter
 import ru.endlesscode.producthuntlite.ui.activity.MainActivity
 import ru.endlesscode.producthuntlite.ui.adapter.PostsAdapter
+import ru.endlesscode.producthuntlite.ui.addDivider
 
 class PostsFragment : ItemsFragment<PostsPresenter>() {
 

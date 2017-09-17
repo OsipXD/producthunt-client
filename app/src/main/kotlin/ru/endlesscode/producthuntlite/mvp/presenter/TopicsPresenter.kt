@@ -30,9 +30,12 @@ import retrofit2.Call
 import ru.endlesscode.producthuntlite.api.ListResponse
 import ru.endlesscode.producthuntlite.api.ProductHunt
 import ru.endlesscode.producthuntlite.mvp.model.Topic
+import ru.endlesscode.producthuntlite.mvp.model.TopicItem
 
 @InjectViewState
 class TopicsPresenter : ItemsPresenter<Topic>() {
+
+    override fun createItem(item: Topic) = TopicItem(item)
 
     override fun getApiCall(before: Int?): Call<out ListResponse<Topic>> = ProductHunt.api.getTopics(before)
 }

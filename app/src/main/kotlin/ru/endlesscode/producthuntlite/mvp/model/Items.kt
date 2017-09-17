@@ -23,33 +23,27 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.ui.adapter
+package ru.endlesscode.producthuntlite.mvp.model
 
-import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import kotlinx.android.synthetic.main.post_item.view.*
-import ru.endlesscode.producthuntlite.R
-import ru.endlesscode.producthuntlite.mvp.model.Post
-import ru.endlesscode.producthuntlite.mvp.view.PostView
-import ru.endlesscode.producthuntlite.ui.common.ViewTypeHolder
-import ru.endlesscode.producthuntlite.ui.load
+class TopicItem(
+        override val id: Int,
+        override val name: String,
+        override val slug: String,
+        override val description: String,
+        override val image: String?) : Topic {
 
-class PostViewHolder(parent: ViewGroup) : ViewTypeHolder(parent, R.layout.post_item), PostView {
+    constructor(topic: Topic) : this(topic.id, topic.name, topic.slug, topic.description, topic.image)
+}
 
-    private var title: TextView = itemView.post_title
-    private var desc: TextView = itemView.post_desc
-    private var votes: TextView = itemView.post_votes
-    private var thumbnail: ImageView = itemView.post_thumbnail
+class PostItem(
+        override val id: Int,
+        override val name: String,
+        override val thumbnail: Thumbnail,
+        override val redirectUrl: String,
+        override val screenshot: Screenshot,
+        override val desc: String,
+        override val votesCount: Int) : Post {
 
-    override lateinit var item: Post
-
-    override fun setData(data: Post) {
-        this.item = data
-
-        title.text = data.name
-        desc.text = data.desc
-        votes.text = data.votesCount.toString()
-        thumbnail.load(data.thumbnail.url)
-    }
+    constructor(post: Post) :
+            this(post.id, post.name, post.thumbnail, post.redirectUrl, post.screenshot, post.desc, post.votesCount)
 }

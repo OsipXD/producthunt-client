@@ -27,6 +27,6 @@ package ru.endlesscode.producthuntlite.ui.common
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import ru.endlesscode.producthuntlite.inflate
+import ru.endlesscode.producthuntlite.ui.inflate
 
 abstract class ViewTypeHolder(parent: ViewGroup, layoutId: Int) : RecyclerView.ViewHolder(parent.inflate(layoutId))

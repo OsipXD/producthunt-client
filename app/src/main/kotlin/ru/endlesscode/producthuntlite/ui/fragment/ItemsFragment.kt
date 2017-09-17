@@ -27,7 +27,6 @@ package ru.endlesscode.producthuntlite.ui.fragment
 
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
@@ -35,12 +34,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.MvpAppCompatFragment
-import ru.endlesscode.producthuntlite.addOnScrollListener
-import ru.endlesscode.producthuntlite.inflate
 import ru.endlesscode.producthuntlite.mvp.model.Item
 import ru.endlesscode.producthuntlite.mvp.presenter.ItemsPresenter
 import ru.endlesscode.producthuntlite.mvp.view.ItemsView
+import ru.endlesscode.producthuntlite.ui.addOnScrollListener
 import ru.endlesscode.producthuntlite.ui.common.InfiniteScrollListener
+import ru.endlesscode.producthuntlite.ui.inflate
 
 
 abstract class ItemsFragment<TPresenter : ItemsPresenter<out Item>> : MvpAppCompatFragment(), ItemsView {
@@ -82,11 +81,6 @@ abstract class ItemsFragment<TPresenter : ItemsPresenter<out Item>> : MvpAppComp
         scrollListener = this.addOnScrollListener {
             presenter.requestItems()
         }
-    }
-
-    protected fun RecyclerView.addDivider() {
-        val divider = DividerItemDecoration(itemsList.context, (layoutManager as LinearLayoutManager).orientation)
-        this.addItemDecoration(divider)
     }
 
     abstract fun createAdapter(): RecyclerView.Adapter<*>?

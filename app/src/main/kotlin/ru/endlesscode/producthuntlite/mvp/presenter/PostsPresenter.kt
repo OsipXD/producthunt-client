@@ -28,6 +28,7 @@ package ru.endlesscode.producthuntlite.mvp.presenter
 import com.arellomobile.mvp.InjectViewState
 import ru.endlesscode.producthuntlite.api.ProductHunt
 import ru.endlesscode.producthuntlite.mvp.model.Post
+import ru.endlesscode.producthuntlite.mvp.model.PostItem
 
 @InjectViewState
 class PostsPresenter(private val topicId: Int) : ItemsPresenter<Post>() {
@@ -36,6 +37,8 @@ class PostsPresenter(private val topicId: Int) : ItemsPresenter<Post>() {
         val TOPIC_ID = "topicId"
         val TOPIC_NAME = "topicName"
     }
+
+    override fun createItem(item: Post) = PostItem(item)
 
     override fun getApiCall(before: Int?) = ProductHunt.api.getTopicFeed(topicId, before)
 }

@@ -23,33 +23,22 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.ui.adapter
+package ru.endlesscode.producthuntlite.mvp
 
-import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import kotlinx.android.synthetic.main.post_item.view.*
-import ru.endlesscode.producthuntlite.R
-import ru.endlesscode.producthuntlite.mvp.model.Post
-import ru.endlesscode.producthuntlite.mvp.view.PostView
-import ru.endlesscode.producthuntlite.ui.common.ViewTypeHolder
-import ru.endlesscode.producthuntlite.ui.load
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.run
+import retrofit2.Call
+import ru.endlesscode.producthuntlite.api.ListResponse
+import ru.gildor.coroutines.retrofit.awaitResult
+import ru.gildor.coroutines.retrofit.getOrThrow
 
-class PostViewHolder(parent: ViewGroup) : ViewTypeHolder(parent, R.layout.post_item), PostView {
+fun <T> Call<out ListResponse<T>>.doInBackground(uiAction: (List<T>) -> Unit) = launch(CommonPool) {
+    val result = awaitResult()
+    val items = result.getOrThrow().get()
 
-    private var title: TextView = itemView.post_title
-    private var desc: TextView = itemView.post_desc
-    private var votes: TextView = itemView.post_votes
-    private var thumbnail: ImageView = itemView.post_thumbnail
-
-    override lateinit var item: Post
-
-    override fun setData(data: Post) {
-        this.item = data
-
-        title.text = data.name
-        desc.text = data.desc
-        votes.text = data.votesCount.toString()
-        thumbnail.load(data.thumbnail.url)
+    run(UI) {
+        uiAction(items)
     }
 }

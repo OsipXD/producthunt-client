@@ -26,7 +26,7 @@
 package ru.endlesscode.producthuntlite.mvp.presenter
 
 import com.arellomobile.mvp.MvpPresenter
-import ru.endlesscode.producthuntlite.doInBackground
+import ru.endlesscode.producthuntlite.mvp.doInBackground
 import ru.endlesscode.producthuntlite.mvp.model.Item
 import ru.endlesscode.producthuntlite.mvp.model.ItemHolder
 import ru.endlesscode.producthuntlite.mvp.model.ItemList
@@ -47,11 +47,14 @@ abstract class ItemsPresenter<TItem : Item> : MvpPresenter<ItemsView>(), ItemLis
 
         viewState.onStartRefreshing()
         getApiCall().doInBackground { items ->
-            addItems(items, append)
+            val itemList = items.map { createItem(it) }
+            addItems(itemList, append)
             viewState.updateView()
             viewState.onEndRefreshing()
         }
     }
+
+    abstract fun createItem(item: TItem): TItem
 
     override fun requestItems() {
         if (isInLoading) return

@@ -29,7 +29,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.arellomobile.mvp.MvpAppCompatActivity
 import ru.endlesscode.producthuntlite.R
-import ru.endlesscode.producthuntlite.commit
+import ru.endlesscode.producthuntlite.ui.commit
 import ru.endlesscode.producthuntlite.ui.fragment.TopicsFragment
 
 class MainActivity : MvpAppCompatActivity() {

@@ -28,10 +28,10 @@ package ru.endlesscode.producthuntlite.ui.adapter
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.topic_item.view.*
 import ru.endlesscode.producthuntlite.R
-import ru.endlesscode.producthuntlite.load
 import ru.endlesscode.producthuntlite.mvp.model.Topic
 import ru.endlesscode.producthuntlite.mvp.view.TopicView
 import ru.endlesscode.producthuntlite.ui.common.ViewTypeHolder
+import ru.endlesscode.producthuntlite.ui.load
 
 class TopicViewHolder(parent: ViewGroup) : ViewTypeHolder(parent, R.layout.topic_item), TopicView {
 
