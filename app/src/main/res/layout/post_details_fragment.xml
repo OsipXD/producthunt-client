@@ -46,16 +46,35 @@
                 android:background="#ececec"
                 android:elevation="0dp"/>
 
-        <TextView
-                android:id="@+id/post_desc"
-                tools:text="Description of this awesome product. Very-very-very long, sure."
-                android:background="@android:color/white"
+        <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:paddingTop="38dp"
-                android:elevation="4dp"/>
+                android:background="@android:color/white"
+                android:elevation="4dp"
+                android:padding="16dp">
+
+            <TextView
+                    android:id="@+id/post_desc"
+                    tools:text="Description of this awesome product. Very-very-very long, sure."
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="4dp"
+                    android:layout_toStartOf="@+id/post_votes"
+                    android:layout_marginEnd="16dp"/>
+
+            <TextView
+                    android:id="@+id/post_votes"
+                    tools:text="1984"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="5"
+                    android:layout_alignParentEnd="true"
+                    android:drawableStart="@drawable/upvote_24dp"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_horizontal"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp"/>
+        </RelativeLayout>
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
