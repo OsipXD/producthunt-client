@@ -4,7 +4,7 @@
 
 ### Used technologies and libs
 **Kotlin** - main programming language\
-**Moxy** - MPV library\
+**Moxy** - MVP library\
 **Retrofit2** and **OkHttp3** - for HTTP requests to API (also tried **Fuel** and **Ion**)\
 **Picasso** - for image loading\
 **Kotlin Coroutines** - for async work with HTTP\
