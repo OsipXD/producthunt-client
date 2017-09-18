@@ -13,3 +13,5 @@
 ### Demo
 [![Demo](demo/screencord.gif)](#)
 
+### Dev process visualization
+[![Click here](http://img.youtube.com/vi/S7sgmbd0OPU/0.jpg)](http://www.youtube.com/watch?v=S7sgmbd0OPU)
