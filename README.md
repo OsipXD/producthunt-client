@@ -1,5 +1,6 @@
-![Logo](demo/product_hunt_lite.png) 
----
+[![Logo](demo/product_hunt_lite.png)](#)
+----------------------------------------------
+**Spent time:** _~40 hours_
 
 ### Used technologies and libs
 **Kotlin** - main programming language\
@@ -10,5 +11,5 @@
 **JUnit4** and **Mockito** - for tests
 
 ### Demo
-![Demo](demo/screencord.gif)
+[![Demo](demo/screencord.gif)](#)
 
