@@ -62,12 +62,12 @@ idea.module {
 
 // Libs versions
 ext {
-    targetVersion = '26.0.+'
+    targetVersion = '26.1.+'
     moxyVersion = '1.5.+'
     retrofitVersion = '2.3.+'
     gsonVersion = '2.8.+'
     coroutinesVersion = '0.18'
-    picassoVersion = '2.5.2'
+    glideVersion = '4.1.1'
 }
 
 dependencies {
@@ -82,7 +82,8 @@ dependencies {
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     compile "com.squareup.okhttp3:logging-interceptor:3.9.0"
     compile "com.google.code.gson:gson:$gsonVersion"
-    compile "com.squareup.picasso:picasso:$picassoVersion"
+    compile "com.github.bumptech.glide:glide:$glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
 
     // Coroutines support
     compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
@@ -105,4 +106,5 @@ dependencies {
 
 repositories {
     mavenCentral()
+    maven { url 'https://maven.google.com' }
 }

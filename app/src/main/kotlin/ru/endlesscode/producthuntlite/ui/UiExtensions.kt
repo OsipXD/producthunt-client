@@ -37,10 +37,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.ImageView
-import com.squareup.picasso.Picasso
 import ru.endlesscode.producthuntlite.R
+import ru.endlesscode.producthuntlite.misc.GlideApp
 import ru.endlesscode.producthuntlite.mvp.parametrize
 import ru.endlesscode.producthuntlite.ui.common.InfiniteScrollListener
+
 
 @Suppress("UNCHECKED_CAST")
 fun <T : View> ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false)
@@ -66,17 +67,21 @@ fun ImageView.whenWeKnowSize(init: ImageView.() -> Unit) {
     }
 }
 
-fun ImageView.resizeAndLoad(url: String?) {
-    load(url?.resize(width, height))
+fun ImageView.resizeAndLoad(url: String) {
+    load(url.resize(width, height))
 }
 
-fun ImageView.load(url: String?) {
+fun ImageView.load(url: String) {
     Log.d("loadingImage", url)
-    Picasso.with(context).load(url)
+
+    when {
+        ".gif" in url -> GlideApp.with(context).asGif().load(url)
+        else -> GlideApp.with(context).asDrawable().load(url)
+    }
             .error(R.color.colorAccent)
             .placeholder(R.color.colorPrimary)
-            .fit()
             .centerCrop()
+            .override(width, height)
             .into(this)
 }
 

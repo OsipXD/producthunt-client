@@ -23,30 +23,10 @@
  * SOFTWARE.
  */
 
-package ru.endlesscode.producthuntlite.ui.adapter
+package ru.endlesscode.producthuntlite.misc
 
-import android.view.ViewGroup
-import kotlinx.android.synthetic.main.topic_item.view.*
-import ru.endlesscode.producthuntlite.R
-import ru.endlesscode.producthuntlite.mvp.model.Topic
-import ru.endlesscode.producthuntlite.mvp.view.TopicView
-import ru.endlesscode.producthuntlite.ui.common.ViewTypeHolder
-import ru.endlesscode.producthuntlite.ui.resizeAndLoad
-import ru.endlesscode.producthuntlite.ui.whenWeKnowSize
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
 
-class TopicViewHolder(parent: ViewGroup) : ViewTypeHolder(parent, R.layout.topic_item), TopicView {
-
-    private val name = itemView.topic_name
-    private val desc = itemView.topic_desc
-    private val icon = itemView.topic_icon
-
-    override lateinit var item: Topic
-
-    override fun setData(data: Topic) {
-        item = data
-
-        name.text = data.name
-        desc.text = data.description
-        icon.whenWeKnowSize { resizeAndLoad(data.image ?: "") }
-    }
-}
+@GlideModule
+class GlideModule : AppGlideModule()
