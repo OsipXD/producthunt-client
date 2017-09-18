@@ -7,7 +7,7 @@
 **Moxy** - MPV library\
 **Retrofit2** and **OkHttp3** - for HTTP requests to API (also tried **Fuel** and **Ion**)\
 **Picasso** - for image loading\
-**Coroutines** - for async work with HTTP\
+**Kotlin Coroutines** - for async work with HTTP\
 **JUnit4** and **Mockito** - for tests
 
 ### Demo
